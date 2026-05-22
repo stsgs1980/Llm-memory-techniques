@@ -81,10 +81,10 @@ export function Footer() {
       </div>
 
       {/* Bottom */}
-      <div className="max-w-6xl mx-auto mt-12 pt-8 border-t border-gray-900 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-gray-600">
+      <div className="max-w-6xl mx-auto mt-12 pt-8 border-t border-[#1a1a1a] flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-[#808080]">
         <span>© 2026 LLM Memory Guide</span>
         <span>Next.js · TypeScript · Tailwind</span>
-        <span className="text-gray-400">Vercel Style</span>
+        <span className="text-[#a0a0a0]">Vercel Style</span>
       </div>
     </footer>
   );

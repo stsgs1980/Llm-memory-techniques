@@ -33,7 +33,7 @@ export default function TokenFlowComparison() {
   return (
     <section className="vercel-section">
       <div className="vercel-section-header">
-        <p className="text-sm text-gray-500 mb-2">Token Savings</p>
+        <p className="text-sm text-[#a0a0a0] mb-2">Token Savings</p>
         <h2 className="vercel-section-title">Compare Efficiency</h2>
         <p className="vercel-section-desc">
           Comparison for a 50-message conversation (~8,000 tokens history)
@@ -55,7 +55,7 @@ export default function TokenFlowComparison() {
               <div className="flex items-center justify-between mb-2">
                 <span className="text-sm text-white">{entry.name}</span>
                 <div className="flex items-center gap-4">
-                  <span className="text-sm text-gray-500">
+                  <span className="text-sm text-[#a0a0a0]">
                     {entry.tokens.toLocaleString()} tokens
                   </span>
                   {entry.savings !== '—' && (
@@ -65,7 +65,7 @@ export default function TokenFlowComparison() {
                   )}
                 </div>
               </div>
-              <div className="h-2 bg-gray-900 rounded-full overflow-hidden">
+              <div className="h-2 bg-[#111111] rounded-full overflow-hidden">
                 <motion.div
                   className="h-full rounded-full bg-white"
                   initial={{ width: 0 }}

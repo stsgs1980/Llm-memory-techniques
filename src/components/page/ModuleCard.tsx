@@ -17,19 +17,19 @@ export function ModuleCard({ module, index, onClick }: ModuleCardProps) {
       : 'text-red-400 border-red-400/30';
 
   return (
-    <button onClick={onClick} className="vercel-card p-6 flex gap-4 items-start group text-left w-full hover:border-gray-700">
-      <div className="w-12 h-12 rounded-lg bg-gray-900 border border-gray-800 flex items-center justify-center shrink-0 group-hover:border-gray-700 transition-colors">
-        <Icon className="w-5 h-5 text-gray-400" />
+    <button onClick={onClick} className="vercel-card p-6 flex gap-4 items-start group text-left w-full hover:border-[#333333]">
+      <div className="w-12 h-12 rounded-lg bg-[#111111] border border-[#222222] flex items-center justify-center shrink-0 group-hover:border-[#333333] transition-colors">
+        <Icon className="w-5 h-5 text-[#a0a0a0]" />
       </div>
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-3 mb-2">
-          <span className="text-xs text-gray-600 font-mono">{String(index + 1).padStart(2, '0')}</span>
+          <span className="text-xs text-[#808080] font-mono">{String(index + 1).padStart(2, '0')}</span>
           <h3 className="text-sm font-semibold text-white truncate">{module.title}</h3>
         </div>
-        <p className="text-sm text-gray-500 leading-relaxed">{module.desc}</p>
+        <p className="text-sm text-[#a0a0a0] leading-relaxed">{module.desc}</p>
         <div className="flex gap-2 mt-4">
           <span className={`px-3 py-1 text-xs font-medium border rounded-full ${diffColor}`}>{module.difficulty}</span>
-          <span className="px-3 py-1 text-xs font-medium text-gray-500 border border-gray-800 rounded-full">{module.time}</span>
+          <span className="px-3 py-1 text-xs font-medium text-[#a0a0a0] border border-[#222222] rounded-full">{module.time}</span>
         </div>
       </div>
     </button>
@@ -38,11 +38,11 @@ export function ModuleCard({ module, index, onClick }: ModuleCardProps) {
 
 export function ToolQuickCard({ name, icon: Icon, onClick }: { name: string; icon: React.ElementType; onClick: () => void }) {
   return (
-    <button onClick={onClick} className="vercel-card p-4 flex flex-col items-center gap-2 text-center cursor-pointer group w-full hover:border-gray-700">
-      <div className="w-8 h-8 rounded-lg bg-gray-900 border border-gray-800 flex items-center justify-center group-hover:border-gray-700 transition-colors">
-        <Icon className="w-4 h-4 text-gray-400" />
+    <button onClick={onClick} className="vercel-card p-4 flex flex-col items-center gap-2 text-center cursor-pointer group w-full hover:border-[#333333]">
+      <div className="w-8 h-8 rounded-lg bg-[#111111] border border-[#222222] flex items-center justify-center group-hover:border-[#333333] transition-colors">
+        <Icon className="w-4 h-4 text-[#a0a0a0]" />
       </div>
-      <span className="text-xs font-medium text-gray-400">{name}</span>
+      <span className="text-xs font-medium text-[#a0a0a0]">{name}</span>
     </button>
   );
 }

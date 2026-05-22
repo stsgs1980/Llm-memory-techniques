@@ -40,7 +40,7 @@ export default function KeyTakeaway() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.45, delay: 0.1 }}
-        className="text-gray-500 mt-4 mb-10 max-w-md mx-auto"
+        className="text-[#a0a0a0] mt-4 mb-10 max-w-md mx-auto"
       >
         No single technique fits all. Combine methods based on your scenario.
       </motion.p>
@@ -58,8 +58,8 @@ export default function KeyTakeaway() {
             variants={item}
             className="vercel-card px-5 py-3 flex items-center gap-3"
           >
-            <span className="text-sm text-gray-500">{p.from}</span>
-            <ArrowRight className="w-4 h-4 text-gray-600" />
+            <span className="text-sm text-[#a0a0a0]">{p.from}</span>
+            <ArrowRight className="w-4 h-4 text-[#808080]" />
             <span className="text-sm text-white font-medium">{p.to}</span>
           </motion.div>
         ))}

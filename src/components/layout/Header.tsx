@@ -28,13 +28,13 @@ function MobileNav() {
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
         <button 
-          className="md:hidden p-2 text-gray-400 hover:text-white transition-colors"
+          className="md:hidden p-2 text-[#a0a0a0] hover:text-white transition-colors"
           aria-label="Menu"
         >
           <Menu className="w-5 h-5" />
         </button>
       </SheetTrigger>
-      <SheetContent side="right" className="w-72 bg-black border-gray-900">
+      <SheetContent side="right" className="w-72 bg-black border-[#1a1a1a]">
         <SheetHeader>
           <SheetTitle className="text-lg font-semibold text-white">
             Navigation
@@ -51,8 +51,8 @@ function MobileNav() {
               className={`
                 px-4 py-3 text-left transition-colors text-sm
                 ${activeTab === tab.id
-                  ? 'text-white bg-gray-900 rounded-lg'
-                  : 'text-gray-400 hover:text-white hover:bg-gray-900/50'
+                  ? 'text-white bg-[#111111] rounded-lg'
+                  : 'text-[#a0a0a0] hover:text-white hover:bg-[#111111]/50'
                 }
               `}
             >
@@ -93,7 +93,7 @@ export function Header() {
       <div className="flex items-center gap-4">
         <button
           onClick={() => setSearchOpen(true)}
-          className="p-2 text-gray-400 hover:text-white transition-colors"
+          className="p-2 text-[#a0a0a0] hover:text-white transition-colors"
           aria-label="Search"
         >
           <Search className="w-4 h-4" />

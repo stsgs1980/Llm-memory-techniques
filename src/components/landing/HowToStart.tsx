@@ -49,9 +49,9 @@ export default function HowToStart() {
       >
         {steps.map((step) => (
           <motion.div key={step.number} variants={item} className="vercel-card p-8 relative">
-            <div className="text-5xl font-bold text-gray-800 absolute top-6 right-6">{step.number}</div>
+            <div className="text-5xl font-bold text-[#404040] absolute top-6 right-6">{step.number}</div>
             <h3 className="text-lg font-semibold text-white mb-3">{step.title}</h3>
-            <p className="text-sm text-gray-500 leading-relaxed">
+            <p className="text-sm text-[#a0a0a0] leading-relaxed">
               {step.description}
             </p>
           </motion.div>

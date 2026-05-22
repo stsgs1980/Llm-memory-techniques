@@ -52,7 +52,7 @@ export function LearnTab() {
   return (
     <div className="vercel-section">
       <div className="vercel-section-header">
-        <p className="text-sm text-gray-500 mb-2">Learning</p>
+        <p className="text-sm text-[#a0a0a0] mb-2">Learning</p>
         <h2 className="vercel-section-title">Master Memory Techniques</h2>
         <p className="vercel-section-desc">
           Step-by-step learning from basics to advanced approaches. Each module includes theory, visualizations, and practical examples.
@@ -70,7 +70,7 @@ export function LearnTab() {
         ))}
       </div>
       <div className="mt-24" id="learn-explorer">
-        <p className="text-sm text-gray-500 mb-2">Interactive Explorer</p>
+        <p className="text-sm text-[#a0a0a0] mb-2">Interactive Explorer</p>
         <h3 className="text-xl font-semibold text-white mb-6">Step-by-Step Visualization</h3>
         <InteractiveExplorer />
       </div>
@@ -96,7 +96,7 @@ export function ToolsTab() {
   return (
     <div className="vercel-section">
       <div className="vercel-section-header">
-        <p className="text-sm text-gray-500 mb-2">Tools</p>
+        <p className="text-sm text-[#a0a0a0] mb-2">Tools</p>
         <h2 className="vercel-section-title">Calculators & Analysis</h2>
         <p className="vercel-section-desc">
           Calculate costs, compare techniques, and choose the optimal strategy for your project.
@@ -125,7 +125,7 @@ export function PlaygroundTab() {
   return (
     <div className="vercel-section">
       <div className="vercel-section-header">
-        <p className="text-sm text-gray-500 mb-2">Playground</p>
+        <p className="text-sm text-[#a0a0a0] mb-2">Playground</p>
         <h2 className="vercel-section-title">Experiment with Techniques</h2>
         <p className="vercel-section-desc">
           Try each technique in action: switch approaches in live chat, explore step-by-step visualizations.
@@ -153,7 +153,7 @@ export function ResourcesTab() {
   return (
     <div className="vercel-section">
       <div className="vercel-section-header">
-        <p className="text-sm text-gray-500 mb-2">Resources</p>
+        <p className="text-sm text-[#a0a0a0] mb-2">Resources</p>
         <h2 className="vercel-section-title">Reference & Community</h2>
         <p className="vercel-section-desc">
           Glossary, FAQ, roadmap, and tips from the developer community.
@@ -166,10 +166,10 @@ export function ResourcesTab() {
             onClick={() => scrollToRes(res.id)} 
             className="vercel-card p-4 flex flex-col items-center gap-3 text-center cursor-pointer group"
           >
-            <div className="w-10 h-10 rounded-lg bg-gray-900 border border-gray-800 flex items-center justify-center group-hover:border-gray-700 transition-colors">
-              <res.icon className="w-5 h-5 text-gray-400" />
+            <div className="w-10 h-10 rounded-lg bg-[#111111] border border-[#222222] flex items-center justify-center group-hover:border-[#333333] transition-colors">
+              <res.icon className="w-5 h-5 text-[#a0a0a0]" />
             </div>
-            <span className="text-sm font-medium text-gray-400">{res.label}</span>
+            <span className="text-sm font-medium text-[#a0a0a0]">{res.label}</span>
           </button>
         ))}
       </div>
