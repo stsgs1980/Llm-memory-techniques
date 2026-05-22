@@ -77,18 +77,24 @@ export function Header() {
   const isMobile = useIsMobile();
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 h-14 bg-background/95 backdrop-blur-sm border-b border-border">
-      {/* Top amber line */}
-      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary to-transparent" />
+    <header className="fixed top-0 left-0 right-0 z-50 h-14 sticky-header-bg border-b border-border">
+      {/* Top amber gradient line */}
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
+      
+      {/* Bottom glow line */}
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
       
       <div className="flex items-center justify-between h-full px-4 md:px-8">
         {/* Logo */}
         <div className="flex items-center gap-3 shrink-0">
-          <div className="w-8 h-8 border border-primary flex items-center justify-center" style={{ boxShadow: '0 0 10px rgba(255, 176, 0, 0.3)' }}>
-            <Layers className="size-4 text-primary" />
+          <div 
+            className="w-8 h-8 rounded-lg flex items-center justify-center glassmorphism-card p-0"
+            style={{ boxShadow: '0 0 20px rgba(255, 176, 0, 0.2)' }}
+          >
+            <Terminal className="size-4 text-primary" />
           </div>
           <div className="flex items-center gap-2">
-            <span className="font-mono font-bold text-primary text-sm amber-glow">
+            <span className="font-mono font-bold gradient-text-amber text-sm">
               llm-memory
             </span>
             <span className="text-muted-foreground text-xs tracking-widest uppercase hidden sm:inline font-mono">
@@ -105,20 +111,20 @@ export function Header() {
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="gap-2 text-xs text-muted-foreground hover:text-primary hover:bg-primary/10 font-mono"
+                  className="gap-2 text-xs text-muted-foreground hover:text-primary hover:bg-primary/10 font-mono rounded-lg"
                   onClick={() => setSearchOpen(true)}
                 >
                   <Search className="size-3.5" />
                   {!isMobile && (
                     <span className="hidden lg:inline">
-                      <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border border-border bg-card px-1.5 font-mono text-[10px] font-medium text-muted-foreground">
+                      <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded-md border border-border bg-card/80 px-1.5 font-mono text-[10px] font-medium text-muted-foreground">
                         ⌘K
                       </kbd>
                     </span>
                   )}
                 </Button>
               </TooltipTrigger>
-              <TooltipContent className="bg-card border-border">
+              <TooltipContent className="bg-card/90 backdrop-blur-md border-border rounded-lg">
                 <p className="font-mono text-xs">./search</p>
               </TooltipContent>
             </Tooltip>
@@ -130,14 +136,14 @@ export function Header() {
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="size-8 text-muted-foreground hover:text-primary hover:bg-primary/10"
+                  className="size-8 text-muted-foreground hover:text-primary hover:bg-primary/10 rounded-lg"
                   onClick={() => setTourOpen(true)}
                 >
                   <Compass className="size-3.5" />
                   <span className="sr-only">Tour</span>
                 </Button>
               </TooltipTrigger>
-              <TooltipContent className="bg-card border-border">
+              <TooltipContent className="bg-card/90 backdrop-blur-md border-border rounded-lg">
                 <p className="font-mono text-xs">./tour</p>
               </TooltipContent>
             </Tooltip>
