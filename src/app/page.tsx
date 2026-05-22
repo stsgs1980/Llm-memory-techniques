@@ -28,10 +28,11 @@ export default function Home() {
     <div className="min-h-screen flex flex-col bg-background">
       <Header />
       
-      {/* Tab Navigation - Terminal Style */}
-      <nav className="border-b border-border bg-card/30 sticky top-14 z-40">
-        <div className="px-4 sm:px-6 lg:px-8">
-          <div className="flex gap-0.5 overflow-x-auto scrollbar-amber -mb-px">
+      {/* Tab Navigation - Monolith Style */}
+      <div className="fwd" />
+      <nav className="sticky top-[60px] z-40 bg-bg/80 backdrop-blur-xl border-b border-border">
+        <div className="max-w-[1120px] mx-auto px-6 md:px-14">
+          <div className="flex gap-1 overflow-x-auto -mb-px">
             {TAB_CONFIG.map((tab) => {
               const Icon = tab.icon;
               const isActive = activeTab === tab.id;
@@ -40,15 +41,14 @@ export default function Home() {
                   key={tab.id} 
                   onClick={() => setActiveTab(tab.id)} 
                   className={`
-                    flex items-center gap-2 px-4 py-2.5 text-xs font-mono font-medium border-b-2 transition-all whitespace-nowrap
+                    px-4 py-3 text-xs font-sans font-light border-b transition-all whitespace-nowrap
                     ${isActive 
-                      ? 'border-primary text-primary bg-primary/5' 
-                      : 'border-transparent text-muted-foreground hover:text-primary hover:border-primary/30'
+                      ? 'border-accent text-accent-bright' 
+                      : 'border-transparent text-text-dim hover:text-text'
                     }
                   `}
                 >
-                  <Icon className="size-3.5" />
-                  <span>{tab.id}</span>
+                  {tab.label}
                 </button>
               );
             })}

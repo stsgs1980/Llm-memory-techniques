@@ -4,22 +4,22 @@ import { motion } from 'framer-motion'
 
 const steps = [
   {
-    number: 1,
-    title: 'Оцените сценарий',
+    number: '01',
+    title: 'Assess',
     description:
-      'Определите тип вашего приложения и используйте Советник или Дерево решений для подбора.',
+      'Identify your application type. Use the Advisor or Decision Tree to find the right technique.',
   },
   {
-    number: 2,
-    title: 'Выберите технику',
+    number: '02',
+    title: 'Compare',
     description:
-      'Начните с Суммаризации, используйте Битву техник для сравнения, Калькулятор для расчёта.',
+      'Start with Summarization. Use Technique Battle for comparison, Calculator for cost analysis.',
   },
   {
-    number: 3,
-    title: 'Реализуйте и тестируйте',
+    number: '03',
+    title: 'Implement',
     description:
-      'Используйте Песочницу для тестирования, Конструктор для проектирования, Шпаргалку для промптов.',
+      'Test in Playground. Use the Constructor for design, Quick Reference for prompts.',
   },
 ]
 
@@ -35,42 +35,28 @@ const item = {
 
 export default function HowToStart() {
   return (
-    <section className="py-16 md:py-20 px-4 md:px-8 industrial-dots">
-      <div>
-        {/* Header */}
-        <div className="text-sm font-mono font-medium text-primary uppercase tracking-widest">
-          КАК НАЧАТЬ
-        </div>
-        <p className="text-muted-foreground mt-2">
-          3 шага для внедрения управления памятью
-        </p>
+    <section className="max-w-[1120px] mx-auto px-6 md:px-14 py-20 md:py-36 border-t border-line">
+      <h2>
+        How to <em>start</em>
+      </h2>
 
-        {/* Steps */}
-        <motion.div
-          variants={container}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: '-40px' }}
-          className="mt-10 space-y-4"
-        >
-          {steps.map((step) => (
-            <motion.div key={step.number} variants={item} className="flex gap-4">
-              {/* Step Number */}
-              <div className="w-8 h-8 rounded-full bg-primary/10 border border-primary/30 flex items-center justify-center font-mono text-sm text-primary font-bold shrink-0 mt-0.5">
-                {step.number}
-              </div>
-
-              {/* Content Card */}
-              <div className="industrial-card p-4 flex-1">
-                <div className="font-mono text-sm font-semibold">{step.title}</div>
-                <p className="text-sm text-muted-foreground mt-1 leading-relaxed">
-                  {step.description}
-                </p>
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
-      </div>
+      <motion.div
+        variants={container}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, margin: '-40px' }}
+        className="steps-grid mt-16"
+      >
+        {steps.map((step) => (
+          <motion.div key={step.number} variants={item} className="step">
+            <div className="step-num">{step.number}</div>
+            <div className="step-title">{step.title}</div>
+            <p className="step-desc">
+              {step.description}
+            </p>
+          </motion.div>
+        ))}
+      </motion.div>
     </section>
   )
 }
