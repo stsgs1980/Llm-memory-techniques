@@ -44,7 +44,7 @@ export default function Home() {
                     px-4 py-3 text-sm font-medium border-b-2 transition-all
                     ${isActive 
                       ? 'border-white text-white' 
-                      : 'border-transparent text-gray-500 hover:text-gray-300'
+                      : 'border-transparent text-[#a0a0a0] hover:text-white'
                     }
                   `}
                 >
@@ -57,7 +57,7 @@ export default function Home() {
       </nav>
       
       {/* Main Content */}
-      <main className="flex-1">
+      <main id="main-content" className="flex-1">
         {activeTab === 'overview' && <OverviewTab />}
         {activeTab === 'learn' && <LearnTab />}
         {activeTab === 'tools' && <ToolsTab />}
