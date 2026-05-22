@@ -35,9 +35,9 @@ const item = {
 
 export default function HowToStart() {
   return (
-    <section className="vercel-section">
-      <div className="vercel-section-header">
-        <h2 className="vercel-section-title">How to Start</h2>
+    <section className="zai-section">
+      <div className="zai-section-header">
+        <h2 className="zai-section-title">How to Start</h2>
       </div>
 
       <motion.div
@@ -45,13 +45,38 @@ export default function HowToStart() {
         initial="hidden"
         whileInView="show"
         viewport={{ once: true, margin: '-40px' }}
-        className="vercel-grid vercel-grid-3"
+        className="zai-grid zai-grid-3"
       >
         {steps.map((step) => (
-          <motion.div key={step.number} variants={item} className="vercel-card p-8 relative">
-            <div className="text-5xl font-bold text-[#404040] absolute top-6 right-6">{step.number}</div>
-            <h3 className="text-lg font-semibold text-white mb-3">{step.title}</h3>
-            <p className="text-sm text-[#a0a0a0] leading-relaxed">
+          <motion.div 
+            key={step.number} 
+            variants={item} 
+            className="zai-card"
+            style={{
+              padding: 'var(--zai-space-8)',
+              position: 'relative'
+            }}
+          >
+            <div style={{
+              fontSize: 'var(--zai-font-size-9)',
+              fontWeight: 700,
+              color: 'var(--zai-color-text-disabled)',
+              position: 'absolute',
+              top: 'var(--zai-space-6)',
+              right: 'var(--zai-space-6)',
+              lineHeight: 1
+            }}>{step.number}</div>
+            <h3 style={{
+              fontSize: 'var(--zai-font-size-5)',
+              fontWeight: 600,
+              color: 'var(--zai-color-text-primary)',
+              marginBottom: 'var(--zai-space-3)'
+            }}>{step.title}</h3>
+            <p style={{
+              fontSize: 'var(--zai-font-size-2)',
+              color: 'var(--zai-color-text-secondary)',
+              lineHeight: 1.65
+            }}>
               {step.description}
             </p>
           </motion.div>

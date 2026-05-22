@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Search, Menu, X } from 'lucide-react';
+import { Search, Menu } from 'lucide-react';
 import { useAppStore, type AppTab } from '@/lib/store';
 import { useIsMobile } from '@/hooks/use-mobile';
 import {
@@ -28,19 +28,32 @@ function MobileNav() {
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
         <button 
-          className="md:hidden p-2 text-[#a0a0a0] hover:text-white transition-colors"
+          className="md:hidden p-2"
+          style={{ color: 'var(--zai-color-text-muted)' }}
           aria-label="Menu"
         >
           <Menu className="w-5 h-5" />
         </button>
       </SheetTrigger>
-      <SheetContent side="right" className="w-72 bg-black border-[#1a1a1a]">
+      <SheetContent 
+        side="right" 
+        style={{ 
+          width: '288px',
+          background: 'var(--zai-color-bg-secondary)',
+          borderColor: 'var(--zai-color-border-subtle)'
+        }}
+      >
         <SheetHeader>
-          <SheetTitle className="text-lg font-semibold text-white">
+          <SheetTitle style={{ 
+            fontFamily: 'var(--font-serif)',
+            fontSize: 'var(--zai-font-size-5)',
+            fontStyle: 'italic',
+            color: 'var(--zai-color-text-primary)'
+          }}>
             Navigation
           </SheetTitle>
         </SheetHeader>
-        <nav className="flex flex-col gap-1 px-4 mt-6">
+        <nav style={{ display: 'flex', flexDirection: 'column', gap: 'var(--zai-space-1)', padding: '0 var(--zai-space-4)', marginTop: 'var(--zai-space-6)' }}>
           {tabs.map((tab) => (
             <button
               key={tab.id}
@@ -48,13 +61,23 @@ function MobileNav() {
                 setActiveTab(tab.id);
                 setOpen(false);
               }}
-              className={`
-                px-4 py-3 text-left transition-colors text-sm
-                ${activeTab === tab.id
-                  ? 'text-white bg-[#111111] rounded-lg'
-                  : 'text-[#a0a0a0] hover:text-white hover:bg-[#111111]/50'
-                }
-              `}
+              style={{
+                padding: 'var(--zai-space-3) var(--zai-space-4)',
+                textAlign: 'left',
+                transition: 'color var(--zai-duration-fast)',
+                fontSize: 'var(--zai-font-size-2)',
+                color: activeTab === tab.id 
+                  ? 'var(--zai-color-text-primary)' 
+                  : 'var(--zai-color-text-muted)',
+                borderLeft: activeTab === tab.id 
+                  ? '2px solid var(--zai-color-accent)' 
+                  : 'none',
+                paddingLeft: activeTab === tab.id 
+                  ? 'var(--zai-space-3)' 
+                  : 'var(--zai-space-4)',
+                background: 'none',
+                cursor: 'pointer'
+              }}
             >
               {tab.label}
             </button>
@@ -70,14 +93,14 @@ export function Header() {
   const isMobile = useIsMobile();
 
   return (
-    <header className="vercel-nav">
-      <a href="#" className="vercel-logo">
-        <div className="vercel-logo-icon" />
+    <header className="zai-nav">
+      <a href="#" className="zai-logo">
+        <div className="zai-logo-icon" />
         <span>LLM Memory</span>
       </a>
       
       {!isMobile && (
-        <nav className="vercel-nav-links">
+        <nav className="zai-nav-links">
           {tabs.map((tab) => (
             <button
               key={tab.id}
@@ -90,16 +113,23 @@ export function Header() {
         </nav>
       )}
       
-      <div className="flex items-center gap-4">
+      <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--zai-space-4)' }}>
         <button
           onClick={() => setSearchOpen(true)}
-          className="p-2 text-[#a0a0a0] hover:text-white transition-colors"
+          style={{ 
+            padding: 'var(--zai-space-2)',
+            color: 'var(--zai-color-text-muted)',
+            transition: 'color var(--zai-duration-fast)',
+            background: 'none',
+            border: 'none',
+            cursor: 'pointer'
+          }}
           aria-label="Search"
         >
           <Search className="w-4 h-4" />
         </button>
         
-        <button className="btn-primary hidden sm:inline-flex">
+        <button className="zai-btn-primary hidden sm:inline-flex">
           Get Started
         </button>
         

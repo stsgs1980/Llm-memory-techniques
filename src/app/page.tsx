@@ -25,14 +25,29 @@ export default function Home() {
   }, [handleKeyDown]);
 
   return (
-    <div className="min-h-screen flex flex-col bg-black">
+    <div className="zai-page-shell">
       <Header />
       
-      {/* Tab Navigation - Vercel Style */}
-      <div className="pt-16" />
-      <nav className="sticky top-0 z-40 bg-black/80 backdrop-blur-xl border-b border-gray-900">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="flex gap-1 py-1">
+      {/* Tab Navigation */}
+      <div style={{ paddingTop: '64px' }} />
+      <nav style={{
+        position: 'sticky',
+        top: 0,
+        zIndex: 40,
+        background: 'var(--zai-glass-bg)',
+        backdropFilter: 'blur(var(--zai-glass-blur))',
+        borderBottom: '1px solid var(--zai-color-border-subtle)'
+      }}>
+        <div style={{
+          maxWidth: '1200px',
+          margin: '0 auto',
+          padding: '0 var(--zai-space-8)'
+        }}>
+          <div style={{ 
+            display: 'flex', 
+            gap: 'var(--zai-space-1)', 
+            padding: 'var(--zai-space-1) 0' 
+          }}>
             {TAB_CONFIG.map((tab) => {
               const Icon = tab.icon;
               const isActive = activeTab === tab.id;
@@ -40,13 +55,19 @@ export default function Home() {
                 <button 
                   key={tab.id} 
                   onClick={() => setActiveTab(tab.id)} 
-                  className={`
-                    px-4 py-3 text-sm font-medium border-b-2 transition-all
-                    ${isActive 
-                      ? 'border-white text-white' 
-                      : 'border-transparent text-[#a0a0a0] hover:text-white'
-                    }
-                  `}
+                  style={{
+                    padding: 'var(--zai-space-3) var(--zai-space-4)',
+                    fontSize: 'var(--zai-font-size-2)',
+                    fontWeight: 500,
+                    border: 'none',
+                    borderBottom: '2px solid',
+                    borderColor: isActive ? 'var(--zai-color-accent)' : 'transparent',
+                    color: isActive ? 'var(--zai-color-text-primary)' : 'var(--zai-color-text-muted)',
+                    background: 'none',
+                    cursor: 'pointer',
+                    transition: 'all var(--zai-duration-fast)',
+                    whiteSpace: 'nowrap'
+                  }}
                 >
                   {tab.label}
                 </button>
@@ -57,7 +78,7 @@ export default function Home() {
       </nav>
       
       {/* Main Content */}
-      <main id="main-content" className="flex-1">
+      <main id="main-content" style={{ flex: 1 }}>
         {activeTab === 'overview' && <OverviewTab />}
         {activeTab === 'learn' && <LearnTab />}
         {activeTab === 'tools' && <ToolsTab />}

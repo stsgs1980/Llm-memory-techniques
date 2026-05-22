@@ -50,15 +50,19 @@ export function OverviewTab() {
 
 export function LearnTab() {
   return (
-    <div className="vercel-section">
-      <div className="vercel-section-header">
-        <p className="text-sm text-[#a0a0a0] mb-2">Learning</p>
-        <h2 className="vercel-section-title">Master Memory Techniques</h2>
-        <p className="vercel-section-desc">
+    <div className="zai-section">
+      <div className="zai-section-header">
+        <p style={{
+          fontSize: 'var(--zai-font-size-2)',
+          color: 'var(--zai-color-text-muted)',
+          marginBottom: 'var(--zai-space-2)'
+        }}>Learning</p>
+        <h2 className="zai-section-title">Master Memory Techniques</h2>
+        <p className="zai-section-desc">
           Step-by-step learning from basics to advanced approaches. Each module includes theory, visualizations, and practical examples.
         </p>
       </div>
-      <div className="vercel-grid vercel-grid-2">
+      <div className="zai-grid zai-grid-2">
         {LEARNING_MODULES.map((mod, i) => (
           <ModuleCard key={mod.id} module={mod} index={i} onClick={() => {
             const el = document.getElementById('learn-explorer');
@@ -69,15 +73,24 @@ export function LearnTab() {
           }} />
         ))}
       </div>
-      <div className="mt-24" id="learn-explorer">
-        <p className="text-sm text-[#a0a0a0] mb-2">Interactive Explorer</p>
-        <h3 className="text-xl font-semibold text-white mb-6">Step-by-Step Visualization</h3>
+      <div style={{ marginTop: 'var(--fib-13)' }} id="learn-explorer">
+        <p style={{
+          fontSize: 'var(--zai-font-size-2)',
+          color: 'var(--zai-color-text-muted)',
+          marginBottom: 'var(--zai-space-2)'
+        }}>Interactive Explorer</p>
+        <h3 style={{
+          fontSize: 'var(--zai-font-size-6)',
+          fontWeight: 600,
+          color: 'var(--zai-color-text-primary)',
+          marginBottom: 'var(--zai-space-6)'
+        }}>Step-by-Step Visualization</h3>
         <InteractiveExplorer />
       </div>
-      <div className="mt-24"><PromptTemplates /></div>
-      <div className="mt-24"><Glossary /></div>
-      <div className="mt-24"><RoadmapSection /></div>
-      <div className="mt-24"><QuickQuiz /></div>
+      <div style={{ marginTop: 'var(--fib-13)' }}><PromptTemplates /></div>
+      <div style={{ marginTop: 'var(--fib-13)' }}><Glossary /></div>
+      <div style={{ marginTop: 'var(--fib-13)' }}><RoadmapSection /></div>
+      <div style={{ marginTop: 'var(--fib-13)' }}><QuickQuiz /></div>
     </div>
   );
 }
@@ -94,20 +107,29 @@ export function ToolsTab() {
   }, []);
 
   return (
-    <div className="vercel-section">
-      <div className="vercel-section-header">
-        <p className="text-sm text-[#a0a0a0] mb-2">Tools</p>
-        <h2 className="vercel-section-title">Calculators & Analysis</h2>
-        <p className="vercel-section-desc">
+    <div className="zai-section">
+      <div className="zai-section-header">
+        <p style={{
+          fontSize: 'var(--zai-font-size-2)',
+          color: 'var(--zai-color-text-muted)',
+          marginBottom: 'var(--zai-space-2)'
+        }}>Tools</p>
+        <h2 className="zai-section-title">Calculators & Analysis</h2>
+        <p className="zai-section-desc">
           Calculate costs, compare techniques, and choose the optimal strategy for your project.
         </p>
       </div>
-      <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3 mb-12">
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(8, 1fr)',
+        gap: 'var(--zai-space-3)',
+        marginBottom: 'var(--fib-8)'
+      }}>
         {TOOLS_SUBTABS.map((tool) => (
           <ToolQuickCard key={tool.id} name={tool.label} icon={tool.icon} onClick={() => scrollToTool(tool.id)} />
         ))}
       </div>
-      <div className="space-y-24">
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--fib-13)' }}>
         <div ref={(el) => { toolRefs.current['cost-sim'] = el; }}><CostSimulator /></div>
         <div ref={(el) => { toolRefs.current['token-calc'] = el; }}><TokenCalculator /></div>
         <div ref={(el) => { toolRefs.current['api-matrix'] = el; }}><ApiMatrix /></div>
@@ -123,15 +145,19 @@ export function ToolsTab() {
 
 export function PlaygroundTab() {
   return (
-    <div className="vercel-section">
-      <div className="vercel-section-header">
-        <p className="text-sm text-[#a0a0a0] mb-2">Playground</p>
-        <h2 className="vercel-section-title">Experiment with Techniques</h2>
-        <p className="vercel-section-desc">
+    <div className="zai-section">
+      <div className="zai-section-header">
+        <p style={{
+          fontSize: 'var(--zai-font-size-2)',
+          color: 'var(--zai-color-text-muted)',
+          marginBottom: 'var(--zai-space-2)'
+        }}>Playground</p>
+        <h2 className="zai-section-title">Experiment with Techniques</h2>
+        <p className="zai-section-desc">
           Try each technique in action: switch approaches in live chat, explore step-by-step visualizations.
         </p>
       </div>
-      <div className="space-y-24">
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--fib-13)' }}>
         <LiveChatDemo />
         <InteractiveExplorer />
       </div>
@@ -151,29 +177,64 @@ export function ResourcesTab() {
   }, []);
 
   return (
-    <div className="vercel-section">
-      <div className="vercel-section-header">
-        <p className="text-sm text-[#a0a0a0] mb-2">Resources</p>
-        <h2 className="vercel-section-title">Reference & Community</h2>
-        <p className="vercel-section-desc">
+    <div className="zai-section">
+      <div className="zai-section-header">
+        <p style={{
+          fontSize: 'var(--zai-font-size-2)',
+          color: 'var(--zai-color-text-muted)',
+          marginBottom: 'var(--zai-space-2)'
+        }}>Resources</p>
+        <h2 className="zai-section-title">Reference & Community</h2>
+        <p className="zai-section-desc">
           Glossary, FAQ, roadmap, and tips from the developer community.
         </p>
       </div>
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-12">
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(4, 1fr)',
+        gap: 'var(--zai-space-3)',
+        marginBottom: 'var(--fib-8)'
+      }}>
         {RESOURCES_SUBTABS.map((res) => (
           <button 
             key={res.id} 
             onClick={() => scrollToRes(res.id)} 
-            className="vercel-card p-4 flex flex-col items-center gap-3 text-center cursor-pointer group"
+            className="zai-card"
+            style={{
+              padding: 'var(--zai-space-4)',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: 'var(--zai-space-3)',
+              textAlign: 'center',
+              cursor: 'pointer'
+            }}
           >
-            <div className="w-10 h-10 rounded-lg bg-[#111111] border border-[#222222] flex items-center justify-center group-hover:border-[#333333] transition-colors">
-              <res.icon className="w-5 h-5 text-[#a0a0a0]" />
+            <div style={{
+              width: 40,
+              height: 40,
+              borderRadius: 'var(--zai-radius-lg)',
+              background: 'var(--zai-color-bg-secondary)',
+              border: '1px solid var(--zai-color-border-subtle)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}>
+              <res.icon style={{ 
+                width: 20, 
+                height: 20, 
+                color: 'var(--zai-color-text-muted)' 
+              }} />
             </div>
-            <span className="text-sm font-medium text-[#a0a0a0]">{res.label}</span>
+            <span style={{
+              fontSize: 'var(--zai-font-size-2)',
+              fontWeight: 500,
+              color: 'var(--zai-color-text-muted)'
+            }}>{res.label}</span>
           </button>
         ))}
       </div>
-      <div className="space-y-24">
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--fib-13)' }}>
         <div ref={(el) => { resRefs.current['glossary'] = el; }}><Glossary /></div>
         <div ref={(el) => { resRefs.current['faq'] = el; }}><FaqAccordion /></div>
         <div ref={(el) => { resRefs.current['roadmap'] = el; }}><RoadmapSection /></div>

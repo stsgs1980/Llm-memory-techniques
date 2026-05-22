@@ -31,11 +31,15 @@ const item = {
 
 export default function TokenFlowComparison() {
   return (
-    <section className="vercel-section">
-      <div className="vercel-section-header">
-        <p className="text-sm text-[#a0a0a0] mb-2">Token Savings</p>
-        <h2 className="vercel-section-title">Compare Efficiency</h2>
-        <p className="vercel-section-desc">
+    <section className="zai-section">
+      <div className="zai-section-header">
+        <p style={{
+          fontSize: 'var(--zai-font-size-2)',
+          color: 'var(--zai-color-text-muted)',
+          marginBottom: 'var(--zai-space-2)'
+        }}>Token Savings</p>
+        <h2 className="zai-section-title">Compare Efficiency</h2>
+        <p className="zai-section-desc">
           Comparison for a 50-message conversation (~8,000 tokens history)
         </p>
       </div>
@@ -45,34 +49,58 @@ export default function TokenFlowComparison() {
         initial="hidden"
         whileInView="show"
         viewport={{ once: true, margin: '-40px' }}
-        className="space-y-4"
+        style={{ display: 'flex', flexDirection: 'column', gap: 'var(--zai-space-4)' }}
       >
         {TOKEN_DATA.map((entry, i) => {
           const pct = (entry.tokens / MAX_TOKENS) * 100
 
           return (
             <motion.div key={entry.name} variants={item}>
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-sm text-white">{entry.name}</span>
-                <div className="flex items-center gap-4">
-                  <span className="text-sm text-[#a0a0a0]">
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                marginBottom: 'var(--zai-space-2)'
+              }}>
+                <span style={{
+                  fontSize: 'var(--zai-font-size-2)',
+                  color: 'var(--zai-color-text-primary)'
+                }}>{entry.name}</span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--zai-space-4)' }}>
+                  <span style={{
+                    fontSize: 'var(--zai-font-size-2)',
+                    color: 'var(--zai-color-text-muted)'
+                  }}>
                     {entry.tokens.toLocaleString()} tokens
                   </span>
                   {entry.savings !== '—' && (
-                    <span className="text-sm text-white font-medium">
+                    <span style={{
+                      fontSize: 'var(--zai-font-size-2)',
+                      color: 'var(--zai-color-text-primary)',
+                      fontWeight: 600
+                    }}>
                       −{entry.savings}
                     </span>
                   )}
                 </div>
               </div>
-              <div className="h-2 bg-[#111111] rounded-full overflow-hidden">
+              <div style={{
+                height: 8,
+                background: 'var(--zai-color-bg-secondary)',
+                borderRadius: 'var(--zai-radius-full)',
+                overflow: 'hidden'
+              }}>
                 <motion.div
-                  className="h-full rounded-full bg-white"
+                  style={{
+                    height: '100%',
+                    borderRadius: 'var(--zai-radius-full)',
+                    background: 'var(--zai-color-accent)',
+                    opacity: 0.2 + (1 - pct/100) * 0.8
+                  }}
                   initial={{ width: 0 }}
                   whileInView={{ width: `${pct}%` }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.8, ease: 'easeOut', delay: i * 0.05 }}
-                  style={{ opacity: 0.2 + (1 - pct/100) * 0.8 }}
                 />
               </div>
             </motion.div>

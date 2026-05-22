@@ -8,19 +8,25 @@ export default function HeroSection() {
   const setActiveTab = useAppStore((s) => s.setActiveTab)
 
   return (
-    <section className="vercel-hero">
+    <section className="zai-hero">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="vercel-hero-badge"
+        className="zai-hero-badge"
       >
-        <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+        <span style={{
+          width: 'var(--zai-dot-size)',
+          height: 'var(--zai-dot-size)',
+          background: 'var(--zai-color-status-online)',
+          borderRadius: '50%',
+          animation: 'pulse 2s infinite'
+        }} />
         Context Engineering Guide
       </motion.div>
       
       <motion.h1
-        className="vercel-hero-title"
+        className="zai-hero-title"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.1 }}
@@ -29,7 +35,7 @@ export default function HeroSection() {
       </motion.h1>
       
       <motion.p
-        className="vercel-hero-subtitle"
+        className="zai-hero-subtitle"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.2 }}
@@ -39,20 +45,20 @@ export default function HeroSection() {
       </motion.p>
       
       <motion.div
-        className="vercel-hero-actions"
+        className="zai-hero-actions"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.3 }}
       >
         <button 
-          className="btn-primary"
+          className="zai-btn-primary"
           onClick={() => setActiveTab('learn')}
         >
           Start Learning
           <ArrowRight className="w-4 h-4" />
         </button>
         <button 
-          className="btn-secondary"
+          className="zai-btn-secondary"
           onClick={() => setActiveTab('playground')}
         >
           View Demo

@@ -4,10 +4,10 @@ import { motion } from 'framer-motion'
 import { TECHNIQUES } from '@/lib/constants'
 import { useAppStore } from '@/lib/store'
 
-const complexityLabels: Record<string, { text: string; primary: boolean }> = {
-  low: { text: 'Low', primary: false },
-  medium: { text: 'Medium', primary: true },
-  high: { text: 'High', primary: true },
+const complexityLabels: Record<string, { text: string; accent: boolean }> = {
+  low: { text: 'Low', accent: false },
+  medium: { text: 'Medium', accent: true },
+  high: { text: 'High', accent: true },
 }
 
 const container = {
@@ -29,10 +29,10 @@ export default function TechniqueOverview() {
   const setSelectedTechnique = useAppStore((s) => s.setSelectedTechnique)
 
   return (
-    <section id="techniques" className="vercel-section">
-      <div className="vercel-section-header">
-        <h2 className="vercel-section-title">Six Techniques</h2>
-        <p className="vercel-section-desc">
+    <section id="techniques" className="zai-section">
+      <div className="zai-section-header">
+        <h2 className="zai-section-title">Six Techniques</h2>
+        <p className="zai-section-desc">
           From simple to advanced — choose the right strategy for your use case.
         </p>
       </div>
@@ -42,7 +42,7 @@ export default function TechniqueOverview() {
         initial="hidden"
         whileInView="show"
         viewport={{ once: true, margin: '-40px' }}
-        className="vercel-grid vercel-grid-3"
+        className="zai-grid zai-grid-3"
       >
         {TECHNIQUES.map((tech) => {
           const Icon = tech.icon
@@ -52,26 +52,26 @@ export default function TechniqueOverview() {
             <motion.div
               key={tech.id}
               variants={item}
-              className="tech-card"
+              className="zai-tech-card"
               onClick={() => {
                 setSelectedTechnique(tech.id)
                 setActiveTab('playground')
               }}
             >
-              <div className="tech-card-icon">
-                <Icon className="w-5 h-5" />
+              <div className="zai-tech-card-icon">
+                <Icon style={{ width: 20, height: 20 }} />
               </div>
-              <h3 className="tech-card-title">
+              <h3 className="zai-tech-card-title">
                 {tech.id.replace('-', ' ')}
               </h3>
-              <p className="tech-card-desc">
+              <p className="zai-tech-card-desc">
                 {tech.description}
               </p>
-              <div className="tech-card-tags">
-                <span className={`tech-tag ${complexity.primary ? 'primary' : ''}`}>
+              <div className="zai-tech-card-tags">
+                <span className={`zai-tag ${complexity.accent ? 'zai-badge-accent' : ''}`}>
                   {complexity.text}
                 </span>
-                <span className="tech-tag">
+                <span className="zai-tag">
                   {tech.infrastructure}
                 </span>
               </div>

@@ -56,9 +56,10 @@ export default function RootLayout({
   return (
     <html lang="ru" className="dark" suppressHydrationWarning>
       <body
-        className={`${inter.variable} ${playfair.variable} ${jetbrains.variable} font-sans antialiased bg-background text-foreground`}
+        className={`${inter.variable} ${playfair.variable} ${jetbrains.variable} font-sans antialiased`}
       >
-        <a href="#main-content" className="skip-link">
+        {/* WCAG: Skip to main content */}
+        <a href="#main-content" className="zai-skip-link">
           Skip to main content
         </a>
         {children}

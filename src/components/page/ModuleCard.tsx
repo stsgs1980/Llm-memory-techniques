@@ -11,25 +11,85 @@ interface ModuleCardProps {
 export function ModuleCard({ module, index, onClick }: ModuleCardProps) {
   const Icon = module.icon;
   const diffColor = module.difficulty === 'Базовый' || module.difficulty === 'Начинающий'
-    ? 'text-green-400 border-green-400/30'
+    ? { color: '#22C55E', border: 'rgba(34, 197, 94, 0.3)' }
     : module.difficulty === 'Средний'
-      ? 'text-yellow-400 border-yellow-400/30'
-      : 'text-red-400 border-red-400/30';
+      ? { color: '#F59E0B', border: 'rgba(245, 158, 11, 0.3)' }
+      : { color: '#EF4444', border: 'rgba(239, 68, 68, 0.3)' };
 
   return (
-    <button onClick={onClick} className="vercel-card p-6 flex gap-4 items-start group text-left w-full hover:border-[#333333]">
-      <div className="w-12 h-12 rounded-lg bg-[#111111] border border-[#222222] flex items-center justify-center shrink-0 group-hover:border-[#333333] transition-colors">
-        <Icon className="w-5 h-5 text-[#a0a0a0]" />
+    <button 
+      onClick={onClick} 
+      className="zai-card zai-card-lift"
+      style={{
+        padding: 'var(--zai-space-6)',
+        display: 'flex',
+        gap: 'var(--zai-space-4)',
+        alignItems: 'flex-start',
+        textAlign: 'left',
+        width: '100%'
+      }}
+    >
+      <div style={{
+        width: 48,
+        height: 48,
+        borderRadius: 'var(--zai-radius-lg)',
+        background: 'var(--zai-color-bg-secondary)',
+        border: '1px solid var(--zai-color-border-subtle)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexShrink: 0
+      }}>
+        <Icon style={{ 
+          width: 20, 
+          height: 20, 
+          color: 'var(--zai-color-text-muted)' 
+        }} />
       </div>
-      <div className="flex-1 min-w-0">
-        <div className="flex items-center gap-3 mb-2">
-          <span className="text-xs text-[#808080] font-mono">{String(index + 1).padStart(2, '0')}</span>
-          <h3 className="text-sm font-semibold text-white truncate">{module.title}</h3>
+      <div style={{ flex: 1, minWidth: 0 }}>
+        <div style={{ 
+          display: 'flex', 
+          alignItems: 'center', 
+          gap: 'var(--zai-space-3)',
+          marginBottom: 'var(--zai-space-2)'
+        }}>
+          <span style={{
+            fontSize: 'var(--zai-font-size-1)',
+            fontFamily: 'var(--font-geist-mono)',
+            color: 'var(--zai-color-text-muted)'
+          }}>{String(index + 1).padStart(2, '0')}</span>
+          <h3 style={{
+            fontSize: 'var(--zai-font-size-2)',
+            fontWeight: 600,
+            color: 'var(--zai-color-text-primary)',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap'
+          }}>{module.title}</h3>
         </div>
-        <p className="text-sm text-[#a0a0a0] leading-relaxed">{module.desc}</p>
-        <div className="flex gap-2 mt-4">
-          <span className={`px-3 py-1 text-xs font-medium border rounded-full ${diffColor}`}>{module.difficulty}</span>
-          <span className="px-3 py-1 text-xs font-medium text-[#a0a0a0] border border-[#222222] rounded-full">{module.time}</span>
+        <p style={{
+          fontSize: 'var(--zai-font-size-2)',
+          color: 'var(--zai-color-text-secondary)',
+          lineHeight: 1.6
+        }}>{module.desc}</p>
+        <div style={{ display: 'flex', gap: 'var(--zai-space-2)', marginTop: 'var(--zai-space-4)' }}>
+          <span style={{
+            padding: '4px var(--zai-space-3)',
+            fontSize: 'var(--zai-font-size-1)',
+            fontWeight: 500,
+            color: diffColor.color,
+            border: `1px solid ${diffColor.border}`,
+            borderRadius: 'var(--zai-radius-full)'
+          }}>{module.difficulty}</span>
+          <span style={{
+            padding: '4px var(--zai-space-3)',
+            fontSize: 'var(--zai-font-size-1)',
+            fontWeight: 500,
+            color: 'var(--zai-color-text-muted)',
+            background: 'var(--zai-color-bg-secondary)',
+            border: '1px solid var(--zai-color-border-subtle)',
+            borderRadius: 'var(--zai-radius-full)'
+          }}>{module.time}</span>
         </div>
       </div>
     </button>
@@ -38,11 +98,41 @@ export function ModuleCard({ module, index, onClick }: ModuleCardProps) {
 
 export function ToolQuickCard({ name, icon: Icon, onClick }: { name: string; icon: React.ElementType; onClick: () => void }) {
   return (
-    <button onClick={onClick} className="vercel-card p-4 flex flex-col items-center gap-2 text-center cursor-pointer group w-full hover:border-[#333333]">
-      <div className="w-8 h-8 rounded-lg bg-[#111111] border border-[#222222] flex items-center justify-center group-hover:border-[#333333] transition-colors">
-        <Icon className="w-4 h-4 text-[#a0a0a0]" />
+    <button 
+      onClick={onClick} 
+      className="zai-card"
+      style={{
+        padding: 'var(--zai-space-4)',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        gap: 'var(--zai-space-2)',
+        textAlign: 'center',
+        cursor: 'pointer',
+        width: '100%'
+      }}
+    >
+      <div style={{
+        width: 32,
+        height: 32,
+        borderRadius: 'var(--zai-radius-md)',
+        background: 'var(--zai-color-bg-secondary)',
+        border: '1px solid var(--zai-color-border-subtle)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
+      }}>
+        <Icon style={{ 
+          width: 16, 
+          height: 16, 
+          color: 'var(--zai-color-text-muted)' 
+        }} />
       </div>
-      <span className="text-xs font-medium text-[#a0a0a0]">{name}</span>
+      <span style={{
+        fontSize: 'var(--zai-font-size-1)',
+        fontWeight: 500,
+        color: 'var(--zai-color-text-muted)'
+      }}>{name}</span>
     </button>
   );
 }
