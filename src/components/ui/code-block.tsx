@@ -1,91 +1,97 @@
 'use client';
 
-import { Light as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { Copy, Check } from 'lucide-react';
 import { useState, useCallback } from 'react';
 import { cn } from '@/lib/utils';
 
 /* ────────────────────────────────────────────
    Amber-Retro Syntax Highlighter Theme
-   WCAG AA compliant colors
+   Based on VSC Dark Plus with Amber-Retro colors
    ──────────────────────────────────────────── */
 
-const amberRetroTheme: Record<string, React.CSSProperties> = {
-  // Base
-  'code[class*="language-"]': {
-    color: '#E8DCC8',
-    fontFamily: 'var(--font-geist-mono), "IBM Plex Mono", monospace',
-    fontSize: '0.8125rem',
-    lineHeight: '1.6',
-    textShadow: 'none',
-    direction: 'ltr',
-    textAlign: 'left',
-    whiteSpace: 'pre',
-    wordSpacing: 'normal',
-    wordBreak: 'normal',
-    tabSize: '2',
-    hyphens: 'none',
-  },
+const amberRetroTheme = {
+  ...vscDarkPlus,
   'pre[class*="language-"]': {
+    ...vscDarkPlus['pre[class*="language-"]'],
+    background: '#141414',
+    color: '#E8DCC8',
+    fontFamily: 'var(--font-geist-mono), "IBM Plex Mono", monospace',
+    fontSize: '0.8125rem',
+    lineHeight: '1.6',
+    margin: 0,
+    padding: '1rem',
+    borderRadius: 0,
+  },
+  'code[class*="language-"]': {
+    ...vscDarkPlus['code[class*="language-"]'],
+    background: 'transparent',
     color: '#E8DCC8',
     fontFamily: 'var(--font-geist-mono), "IBM Plex Mono", monospace',
     fontSize: '0.8125rem',
     lineHeight: '1.6',
     textShadow: 'none',
-    direction: 'ltr',
-    textAlign: 'left',
-    whiteSpace: 'pre',
-    wordSpacing: 'normal',
-    wordBreak: 'normal',
-    tabSize: '2',
-    hyphens: 'none',
-    background: '#141414',
-    margin: '0',
-    overflow: 'auto',
-    padding: '1rem',
   },
-  // Comments - muted but readable (WCAG AA)
-  comment: { color: '#7A6F5D', fontStyle: 'italic' },
-  prolog: { color: '#7A6F5D', fontStyle: 'italic' },
-  doctype: { color: '#7A6F5D', fontStyle: 'italic' },
-  cdata: { color: '#7A6F5D', fontStyle: 'italic' },
+  // Comments
+  comment: { color: '#6B705C', fontStyle: 'italic' },
+  prolog: { color: '#6B705C', fontStyle: 'italic' },
+  doctype: { color: '#6B705C', fontStyle: 'italic' },
+  cdata: { color: '#6B705C', fontStyle: 'italic' },
   // Punctuation
   punctuation: { color: '#B8A060' },
-  // Properties/Tags
-  property: { color: '#FFB000' },
-  tag: { color: '#FFB000' },
-  boolean: { color: '#FFB000' },
-  number: { color: '#FF8C00' },
-  constant: { color: '#FF8C00' },
-  symbol: { color: '#FFB000' },
-  deleted: { color: '#FF4444' },
+  // Keywords: def, class, if, else, return, import, from, etc.
+  keyword: { color: '#00FFFF', fontWeight: '600' },
+  'keyword.module': { color: '#00FFFF' },
+  'keyword.control': { color: '#00FFFF' },
+  'keyword.operator': { color: '#00FFFF' },
+  'keyword.other': { color: '#00FFFF' },
+  // Built-ins: len, print, list, dict, etc.
+  builtin: { color: '#FFB000' },
+  'builtin.function': { color: '#FFB000' },
+  'builtin.type': { color: '#FFB000' },
+  // Functions: def names
+  function: { color: '#FFB000', fontWeight: '500' },
+  'function.definition': { color: '#FFB000' },
+  'function.call': { color: '#FFB000' },
   // Strings
   string: { color: '#00FF88' },
-  char: { color: '#00FF88' },
-  regex: { color: '#00FF88' },
-  inserted: { color: '#00FF88' },
-  // Keywords/Functions
-  atrule: { color: '#00FFFF' },
-  attr: { color: '#00FFFF' },
-  keyword: { color: '#00FFFF', fontWeight: '600' },
-  'attr-name': { color: '#00FFFF' },
-  selector: { color: '#00FFFF' },
-  // Functions
-  function: { color: '#FFB000' },
-  'function-variable': { color: '#FFB000' },
-  variable: { color: '#E8DCC8' },
+  'string.quoted': { color: '#00FF88' },
+  'string.template': { color: '#00FF88' },
+  // Numbers
+  number: { color: '#FF8C00' },
+  'number.integer': { color: '#FF8C00' },
+  'number.float': { color: '#FF8C00' },
   // Operators
   operator: { color: '#B8A060' },
-  entity: { color: '#FFB000', cursor: 'help' },
-  url: { color: '#00FF88' },
-  // Backgrounds for selections
-  'language-css .token.string': { color: '#00FF88' },
-  'style .token.string': { color: '#00FF88' },
-  // Bold for important elements
+  'operator.assignment': { color: '#B8A060' },
+  'operator.arithmetic': { color: '#B8A060' },
+  'operator.comparison': { color: '#B8A060' },
+  // Variables
+  variable: { color: '#E8DCC8' },
+  'variable.parameter': { color: '#FFB000' },
+  'variable.other': { color: '#E8DCC8' },
+  // Class names
+  'class-name': { color: '#00FFFF' },
+  'class.definition': { color: '#00FFFF' },
+  // Property
+  property: { color: '#FFB000' },
+  // Constants
+  constant: { color: '#FF8C00' },
+  'constant.language': { color: '#00FFFF' },
+  'constant.numeric': { color: '#FF8C00' },
+  // Decorators
+  decorator: { color: '#FFB000' },
+  annotation: { color: '#FFB000' },
+  // Special
   important: { color: '#FFB000', fontWeight: '600' },
-  bold: { fontWeight: '600' },
-  italic: { fontStyle: 'italic' },
+  // Boolean
+  boolean: { color: '#00FFFF' },
+  // Null/None
+  'constant.language.null': { color: '#00FFFF' },
+  // Imports
+  'namespace': { color: '#E8DCC8' },
+  'module': { color: '#E8DCC8' },
 };
 
 /* ────────────────────────────────────────────
@@ -139,7 +145,6 @@ export function CodeBlock({
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {
-      // Fallback for older browsers
       const textArea = document.createElement('textarea');
       textArea.value = code;
       textArea.style.position = 'fixed';
@@ -206,7 +211,7 @@ export function CodeBlock({
         </div>
       )}
 
-      {/* Code */}
+      {/* Code with Syntax Highlighting */}
       <div
         className="overflow-auto scrollbar-amber"
         style={{ maxHeight: maxHeight || '24rem' }}
@@ -220,6 +225,7 @@ export function CodeBlock({
             background: '#141414',
             fontSize: '0.8125rem',
             lineHeight: '1.6',
+            borderRadius: 0,
           }}
           codeTagProps={{
             style: {
