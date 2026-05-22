@@ -31,48 +31,48 @@ const item = {
 
 export default function TokenFlowComparison() {
   return (
-    <section className="max-w-[1120px] mx-auto px-6 md:px-14 py-20 md:py-28 border-t border-line">
-      <div className="eyebrow">
-        <span className="eyebrow-line" />
-        Token Savings
+    <section className="vercel-section">
+      <div className="vercel-section-header">
+        <p className="text-sm text-gray-500 mb-2">Token Savings</p>
+        <h2 className="vercel-section-title">Compare Efficiency</h2>
+        <p className="vercel-section-desc">
+          Comparison for a 50-message conversation (~8,000 tokens history)
+        </p>
       </div>
-      <p className="text-text-dim text-sm mt-2 mb-10 font-light">
-        Comparison for a 50-message conversation (~8,000 tokens history)
-      </p>
 
       <motion.div
         variants={container}
         initial="hidden"
         whileInView="show"
         viewport={{ once: true, margin: '-40px' }}
-        className="space-y-3"
+        className="space-y-4"
       >
         {TOKEN_DATA.map((entry, i) => {
           const pct = (entry.tokens / MAX_TOKENS) * 100
 
           return (
             <motion.div key={entry.name} variants={item}>
-              <div className="flex items-center justify-between mb-1">
-                <span className="text-sm text-text">{entry.name}</span>
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-sm text-white">{entry.name}</span>
                 <div className="flex items-center gap-4">
-                  <span className="text-xs text-text-dim font-light">
+                  <span className="text-sm text-gray-500">
                     {entry.tokens.toLocaleString()} tokens
                   </span>
                   {entry.savings !== '—' && (
-                    <span className="text-xs text-accent-bright font-medium">
+                    <span className="text-sm text-white font-medium">
                       −{entry.savings}
                     </span>
                   )}
                 </div>
               </div>
-              <div className="h-6 bg-bg-raised rounded-sm overflow-hidden">
+              <div className="h-2 bg-gray-900 rounded-full overflow-hidden">
                 <motion.div
-                  className="h-full rounded-sm bg-accent"
+                  className="h-full rounded-full bg-white"
                   initial={{ width: 0 }}
                   whileInView={{ width: `${pct}%` }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.8, ease: 'easeOut', delay: i * 0.05 }}
-                  style={{ opacity: 0.3 + (1 - pct/100) * 0.7 }}
+                  style={{ opacity: 0.2 + (1 - pct/100) * 0.8 }}
                 />
               </div>
             </motion.div>

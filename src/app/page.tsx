@@ -25,14 +25,14 @@ export default function Home() {
   }, [handleKeyDown]);
 
   return (
-    <div className="min-h-screen flex flex-col bg-background">
+    <div className="min-h-screen flex flex-col bg-black">
       <Header />
       
-      {/* Tab Navigation - Monolith Style */}
-      <div className="fwd" />
-      <nav className="sticky top-[60px] z-40 bg-bg/80 backdrop-blur-xl border-b border-border">
-        <div className="max-w-[1120px] mx-auto px-6 md:px-14">
-          <div className="flex gap-1 overflow-x-auto -mb-px">
+      {/* Tab Navigation - Vercel Style */}
+      <div className="pt-16" />
+      <nav className="sticky top-0 z-40 bg-black/80 backdrop-blur-xl border-b border-gray-900">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="flex gap-1 py-1">
             {TAB_CONFIG.map((tab) => {
               const Icon = tab.icon;
               const isActive = activeTab === tab.id;
@@ -41,10 +41,10 @@ export default function Home() {
                   key={tab.id} 
                   onClick={() => setActiveTab(tab.id)} 
                   className={`
-                    px-4 py-3 text-xs font-sans font-light border-b transition-all whitespace-nowrap
+                    px-4 py-3 text-sm font-medium border-b-2 transition-all
                     ${isActive 
-                      ? 'border-accent text-accent-bright' 
-                      : 'border-transparent text-text-dim hover:text-text'
+                      ? 'border-white text-white' 
+                      : 'border-transparent text-gray-500 hover:text-gray-300'
                     }
                   `}
                 >
@@ -57,7 +57,7 @@ export default function Home() {
       </nav>
       
       {/* Main Content */}
-      <main className="flex-1 relative z-10">
+      <main className="flex-1">
         {activeTab === 'overview' && <OverviewTab />}
         {activeTab === 'learn' && <LearnTab />}
         {activeTab === 'tools' && <ToolsTab />}

@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Search, Menu } from 'lucide-react';
+import { Search, Menu, X } from 'lucide-react';
 import { useAppStore, type AppTab } from '@/lib/store';
 import { useIsMobile } from '@/hooks/use-mobile';
 import {
@@ -28,15 +28,15 @@ function MobileNav() {
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
         <button 
-          className="md:hidden p-2 text-text-dim hover:text-text transition-colors"
+          className="md:hidden p-2 text-gray-400 hover:text-white transition-colors"
           aria-label="Menu"
         >
-          <Menu className="size-5" />
+          <Menu className="w-5 h-5" />
         </button>
       </SheetTrigger>
-      <SheetContent side="right" className="w-72 bg-bg-raised border-border">
+      <SheetContent side="right" className="w-72 bg-black border-gray-900">
         <SheetHeader>
-          <SheetTitle className="font-serif text-lg italic text-text">
+          <SheetTitle className="text-lg font-semibold text-white">
             Navigation
           </SheetTitle>
         </SheetHeader>
@@ -49,10 +49,10 @@ function MobileNav() {
                 setOpen(false);
               }}
               className={`
-                px-4 py-3 text-left transition-colors font-sans text-sm
+                px-4 py-3 text-left transition-colors text-sm
                 ${activeTab === tab.id
-                  ? 'text-accent-bright border-l-2 border-accent pl-3'
-                  : 'text-text-dim hover:text-text'
+                  ? 'text-white bg-gray-900 rounded-lg'
+                  : 'text-gray-400 hover:text-white hover:bg-gray-900/50'
                 }
               `}
             >
@@ -70,36 +70,36 @@ export function Header() {
   const isMobile = useIsMobile();
 
   return (
-    <header className="nav">
-      <a href="#" className="logo">
-        LLM<span>Memory</span>
+    <header className="vercel-nav">
+      <a href="#" className="vercel-logo">
+        <div className="vercel-logo-icon" />
+        <span>LLM Memory</span>
       </a>
       
       {!isMobile && (
-        <ul className="nav-links">
+        <nav className="vercel-nav-links">
           {tabs.map((tab) => (
-            <li key={tab.id}>
-              <button
-                onClick={() => setActiveTab(tab.id)}
-                className={activeTab === tab.id ? 'text-accent-bright' : ''}
-              >
-                {tab.label}
-              </button>
-            </li>
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={activeTab === tab.id ? 'active' : ''}
+            >
+              {tab.label}
+            </button>
           ))}
-        </ul>
+        </nav>
       )}
       
       <div className="flex items-center gap-4">
         <button
           onClick={() => setSearchOpen(true)}
-          className="p-2 text-text-dim hover:text-text transition-colors"
+          className="p-2 text-gray-400 hover:text-white transition-colors"
           aria-label="Search"
         >
-          <Search className="size-4" />
+          <Search className="w-4 h-4" />
         </button>
         
-        <button className="nav-cta hidden sm:inline-flex">
+        <button className="btn-primary hidden sm:inline-flex">
           Get Started
         </button>
         

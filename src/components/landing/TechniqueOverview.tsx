@@ -4,10 +4,10 @@ import { motion } from 'framer-motion'
 import { TECHNIQUES } from '@/lib/constants'
 import { useAppStore } from '@/lib/store'
 
-const complexityLabels: Record<string, { text: string; accent: boolean }> = {
-  low: { text: 'Low', accent: false },
-  medium: { text: 'Medium', accent: true },
-  high: { text: 'High', accent: true },
+const complexityLabels: Record<string, { text: string; primary: boolean }> = {
+  low: { text: 'Low', primary: false },
+  medium: { text: 'Medium', primary: true },
+  high: { text: 'High', primary: true },
 }
 
 const container = {
@@ -29,20 +29,20 @@ export default function TechniqueOverview() {
   const setSelectedTechnique = useAppStore((s) => s.setSelectedTechnique)
 
   return (
-    <section id="techniques" className="max-w-[1120px] mx-auto px-6 md:px-14 py-20 md:py-36">
-      <h2>
-        Six <em>techniques</em>
-      </h2>
-      <p className="text-text-dim text-sm mt-3 mb-12 max-w-md font-light">
-        From simple to advanced — choose the right strategy for your use case.
-      </p>
+    <section id="techniques" className="vercel-section">
+      <div className="vercel-section-header">
+        <h2 className="vercel-section-title">Six Techniques</h2>
+        <p className="vercel-section-desc">
+          From simple to advanced — choose the right strategy for your use case.
+        </p>
+      </div>
 
       <motion.div
         variants={container}
         initial="hidden"
         whileInView="show"
         viewport={{ once: true, margin: '-40px' }}
-        className="tech-grid"
+        className="vercel-grid vercel-grid-3"
       >
         {TECHNIQUES.map((tech) => {
           const Icon = tech.icon
@@ -58,16 +58,17 @@ export default function TechniqueOverview() {
                 setActiveTab('playground')
               }}
             >
-              <div className="tech-card-title">
-                {tech.id.replace('-', ' ')}
+              <div className="tech-card-icon">
+                <Icon className="w-5 h-5" />
               </div>
-              
+              <h3 className="tech-card-title">
+                {tech.id.replace('-', ' ')}
+              </h3>
               <p className="tech-card-desc">
                 {tech.description}
               </p>
-
-              <div className="tech-card-meta">
-                <span className={`tech-tag ${complexity.accent ? 'accent' : ''}`}>
+              <div className="tech-card-tags">
+                <span className={`tech-tag ${complexity.primary ? 'primary' : ''}`}>
                   {complexity.text}
                 </span>
                 <span className="tech-tag">

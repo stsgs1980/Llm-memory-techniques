@@ -2,55 +2,61 @@
 
 import { motion } from 'framer-motion'
 import { useAppStore } from '@/lib/store'
+import { ArrowRight } from 'lucide-react'
 
 export default function HeroSection() {
   const setActiveTab = useAppStore((s) => s.setActiveTab)
 
   return (
-    <section className="max-w-[1120px] mx-auto px-6 md:px-14 pt-32 md:pt-48 pb-16 md:pb-24 grid md:grid-cols-[1.4fr_1fr] gap-20 items-end">
-      {/* Left Column */}
-      <div>
-        <div className="eyebrow">
-          <span className="eyebrow-line" />
-          Context Engineering Guide
-        </div>
-        
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-        >
-          Master LLM<br />
-          <em>Memory</em>
-        </motion.h1>
-      </div>
-      
-      {/* Right Column */}
-      <motion.div 
-        className="pb-3"
+    <section className="vercel-hero">
+      <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.2 }}
+        transition={{ duration: 0.5 }}
+        className="vercel-hero-badge"
       >
-        <p className="text-base leading-relaxed mb-9">
-          Six architectural patterns for context management in LLM applications. 
-          Each technique includes interactive demos, code examples, and cost analysis.
-        </p>
-        
-        <div className="flex gap-3">
-          <button 
-            className="btn-fill"
-            onClick={() => setActiveTab('learn')}
-          >
-            Start Learning
-          </button>
-          <button 
-            className="btn-ghost"
-            onClick={() => setActiveTab('playground')}
-          >
-            View Demo
-          </button>
-        </div>
+        <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+        Context Engineering Guide
+      </motion.div>
+      
+      <motion.h1
+        className="vercel-hero-title"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.1 }}
+      >
+        Master LLM Memory
+      </motion.h1>
+      
+      <motion.p
+        className="vercel-hero-subtitle"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.2 }}
+      >
+        Six architectural patterns for context management in LLM applications.
+        Interactive demos, code examples, and cost analysis for each technique.
+      </motion.p>
+      
+      <motion.div
+        className="vercel-hero-actions"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.3 }}
+      >
+        <button 
+          className="btn-primary"
+          onClick={() => setActiveTab('learn')}
+        >
+          Start Learning
+          <ArrowRight className="w-4 h-4" />
+        </button>
+        <button 
+          className="btn-secondary"
+          onClick={() => setActiveTab('playground')}
+        >
+          View Demo
+        </button>
       </motion.div>
     </section>
   )

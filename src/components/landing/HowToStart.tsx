@@ -35,23 +35,23 @@ const item = {
 
 export default function HowToStart() {
   return (
-    <section className="max-w-[1120px] mx-auto px-6 md:px-14 py-20 md:py-36 border-t border-line">
-      <h2>
-        How to <em>start</em>
-      </h2>
+    <section className="vercel-section">
+      <div className="vercel-section-header">
+        <h2 className="vercel-section-title">How to Start</h2>
+      </div>
 
       <motion.div
         variants={container}
         initial="hidden"
         whileInView="show"
         viewport={{ once: true, margin: '-40px' }}
-        className="steps-grid mt-16"
+        className="vercel-grid vercel-grid-3"
       >
         {steps.map((step) => (
-          <motion.div key={step.number} variants={item} className="step">
-            <div className="step-num">{step.number}</div>
-            <div className="step-title">{step.title}</div>
-            <p className="step-desc">
+          <motion.div key={step.number} variants={item} className="vercel-card p-8 relative">
+            <div className="text-5xl font-bold text-gray-800 absolute top-6 right-6">{step.number}</div>
+            <h3 className="text-lg font-semibold text-white mb-3">{step.title}</h3>
+            <p className="text-sm text-gray-500 leading-relaxed">
               {step.description}
             </p>
           </motion.div>

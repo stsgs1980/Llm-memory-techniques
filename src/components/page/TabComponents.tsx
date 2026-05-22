@@ -50,15 +50,15 @@ export function OverviewTab() {
 
 export function LearnTab() {
   return (
-    <div className="px-4 sm:px-6 lg:px-8 py-10">
-      <div className="mb-10">
-        <p className="font-mono text-xs text-primary uppercase tracking-widest mb-2">Обучение</p>
-        <h2 className="text-2xl md:text-3xl font-bold font-mono tracking-tight">Изучите техники управления памятью</h2>
-        <p className="text-muted-foreground mt-2 max-w-2xl text-sm">
-          Пошаговое обучение от основ до продвинутых подходов. Каждый модуль включает теорию, визуализации и практические примеры.
+    <div className="vercel-section">
+      <div className="vercel-section-header">
+        <p className="text-sm text-gray-500 mb-2">Learning</p>
+        <h2 className="vercel-section-title">Master Memory Techniques</h2>
+        <p className="vercel-section-desc">
+          Step-by-step learning from basics to advanced approaches. Each module includes theory, visualizations, and practical examples.
         </p>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="vercel-grid vercel-grid-2">
         {LEARNING_MODULES.map((mod, i) => (
           <ModuleCard key={mod.id} module={mod} index={i} onClick={() => {
             const el = document.getElementById('learn-explorer');
@@ -69,15 +69,15 @@ export function LearnTab() {
           }} />
         ))}
       </div>
-      <div className="mt-16" id="learn-explorer">
-        <p className="font-mono text-xs text-primary uppercase tracking-widest mb-2">Интерактивный исследователь</p>
-        <h3 className="text-lg font-bold font-mono mb-6">Пошаговая визуализация техник</h3>
+      <div className="mt-24" id="learn-explorer">
+        <p className="text-sm text-gray-500 mb-2">Interactive Explorer</p>
+        <h3 className="text-xl font-semibold text-white mb-6">Step-by-Step Visualization</h3>
         <InteractiveExplorer />
       </div>
-      <div className="mt-16"><PromptTemplates /></div>
-      <div className="mt-16"><Glossary /></div>
-      <div className="mt-16"><RoadmapSection /></div>
-      <div className="mt-16"><QuickQuiz /></div>
+      <div className="mt-24"><PromptTemplates /></div>
+      <div className="mt-24"><Glossary /></div>
+      <div className="mt-24"><RoadmapSection /></div>
+      <div className="mt-24"><QuickQuiz /></div>
     </div>
   );
 }
@@ -94,20 +94,20 @@ export function ToolsTab() {
   }, []);
 
   return (
-    <div className="px-4 sm:px-6 lg:px-8 py-10">
-      <div className="mb-8">
-        <p className="font-mono text-xs text-primary uppercase tracking-widest mb-2">Инструменты</p>
-        <h2 className="text-2xl md:text-3xl font-bold font-mono tracking-tight">Калькуляторы, сравнения и анализ</h2>
-        <p className="text-muted-foreground mt-2 max-w-2xl text-sm">
-          Рассчитайте стоимость, сравните техники и выберите оптимальную стратегию для вашего проекта.
+    <div className="vercel-section">
+      <div className="vercel-section-header">
+        <p className="text-sm text-gray-500 mb-2">Tools</p>
+        <h2 className="vercel-section-title">Calculators & Analysis</h2>
+        <p className="vercel-section-desc">
+          Calculate costs, compare techniques, and choose the optimal strategy for your project.
         </p>
       </div>
-      <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3 mb-8">
+      <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3 mb-12">
         {TOOLS_SUBTABS.map((tool) => (
           <ToolQuickCard key={tool.id} name={tool.label} icon={tool.icon} onClick={() => scrollToTool(tool.id)} />
         ))}
       </div>
-      <div className="space-y-16">
+      <div className="space-y-24">
         <div ref={(el) => { toolRefs.current['cost-sim'] = el; }}><CostSimulator /></div>
         <div ref={(el) => { toolRefs.current['token-calc'] = el; }}><TokenCalculator /></div>
         <div ref={(el) => { toolRefs.current['api-matrix'] = el; }}><ApiMatrix /></div>
@@ -123,15 +123,15 @@ export function ToolsTab() {
 
 export function PlaygroundTab() {
   return (
-    <div className="px-4 sm:px-6 lg:px-8 py-10">
-      <div className="mb-8">
-        <p className="font-mono text-xs text-primary uppercase tracking-widest mb-2">Песочница</p>
-        <h2 className="text-2xl md:text-3xl font-bold font-mono tracking-tight">Экспериментируйте с техниками</h2>
-        <p className="text-muted-foreground mt-2 max-w-2xl text-sm">
-          Попробуйте каждую технику в действии: переключайте подходы в живом чате, исследуйте пошаговые визуализации.
+    <div className="vercel-section">
+      <div className="vercel-section-header">
+        <p className="text-sm text-gray-500 mb-2">Playground</p>
+        <h2 className="vercel-section-title">Experiment with Techniques</h2>
+        <p className="vercel-section-desc">
+          Try each technique in action: switch approaches in live chat, explore step-by-step visualizations.
         </p>
       </div>
-      <div className="space-y-16">
+      <div className="space-y-24">
         <LiveChatDemo />
         <InteractiveExplorer />
       </div>
@@ -151,25 +151,29 @@ export function ResourcesTab() {
   }, []);
 
   return (
-    <div className="px-4 sm:px-6 lg:px-8 py-10">
-      <div className="mb-8">
-        <p className="font-mono text-xs text-primary uppercase tracking-widest mb-2">Ресурсы</p>
-        <h2 className="text-2xl md:text-3xl font-bold font-mono tracking-tight">Справочные материалы и сообщество</h2>
-        <p className="text-muted-foreground mt-2 max-w-2xl text-sm">
-          Глоссарий, FAQ, дорожная карта и советы от сообщества разработчиков.
+    <div className="vercel-section">
+      <div className="vercel-section-header">
+        <p className="text-sm text-gray-500 mb-2">Resources</p>
+        <h2 className="vercel-section-title">Reference & Community</h2>
+        <p className="vercel-section-desc">
+          Glossary, FAQ, roadmap, and tips from the developer community.
         </p>
       </div>
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-12">
         {RESOURCES_SUBTABS.map((res) => (
-          <button key={res.id} onClick={() => scrollToRes(res.id)} className="industrial-card p-3 flex flex-col items-center gap-2 text-center cursor-pointer group w-full">
-            <div className="w-8 h-8 rounded-sm bg-primary/10 border border-primary/20 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-              <res.icon className="size-4 text-primary" />
+          <button 
+            key={res.id} 
+            onClick={() => scrollToRes(res.id)} 
+            className="vercel-card p-4 flex flex-col items-center gap-3 text-center cursor-pointer group"
+          >
+            <div className="w-10 h-10 rounded-lg bg-gray-900 border border-gray-800 flex items-center justify-center group-hover:border-gray-700 transition-colors">
+              <res.icon className="w-5 h-5 text-gray-400" />
             </div>
-            <span className="text-xs font-mono font-medium">{res.label}</span>
+            <span className="text-sm font-medium text-gray-400">{res.label}</span>
           </button>
         ))}
       </div>
-      <div className="space-y-16">
+      <div className="space-y-24">
         <div ref={(el) => { resRefs.current['glossary'] = el; }}><Glossary /></div>
         <div ref={(el) => { resRefs.current['faq'] = el; }}><FaqAccordion /></div>
         <div ref={(el) => { resRefs.current['roadmap'] = el; }}><RoadmapSection /></div>

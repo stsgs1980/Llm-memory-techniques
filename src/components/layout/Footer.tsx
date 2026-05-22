@@ -26,29 +26,27 @@ export function Footer() {
   };
 
   return (
-    <footer className="max-w-[1120px] mx-auto px-6 md:px-14 py-12 border-t border-line">
-      <div className="grid grid-cols-1 md:grid-cols-[1.2fr_1fr_1fr_1fr] gap-12">
+    <footer className="vercel-footer">
+      <div className="vercel-footer-content">
         {/* Brand */}
         <div>
-          <div className="font-serif text-lg italic text-text-dim mb-3">
-            LLM<span className="text-accent-bright">Memory</span>
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-6 h-6 bg-white" style={{ clipPath: 'polygon(50% 0%, 100% 100%, 0% 100%)' }} />
+            <span className="text-lg font-semibold text-white">LLM Memory</span>
           </div>
-          <p className="text-xs text-text-faint font-light leading-relaxed">
+          <p className="vercel-footer-brand">
             Interactive guide to LLM memory management. Six techniques, interactive demos, calculators and tools.
           </p>
         </div>
 
         {/* Techniques */}
         <div>
-          <strong className="block text-[10px] font-medium tracking-[0.12em] uppercase text-text-dim mb-4">
-            Techniques
-          </strong>
-          <div className="space-y-1">
+          <h4 className="vercel-footer-title">Techniques</h4>
+          <div className="vercel-footer-links">
             {TECHNIQUES.slice(0, 4).map((tech) => (
               <button
                 key={tech.id}
                 onClick={() => handleTechniqueClick(tech.id)}
-                className="block text-xs text-text-faint hover:text-text-dim transition-colors py-0.5"
               >
                 {tech.id}
               </button>
@@ -58,15 +56,12 @@ export function Footer() {
 
         {/* Navigation */}
         <div>
-          <strong className="block text-[10px] font-medium tracking-[0.12em] uppercase text-text-dim mb-4">
-            Navigation
-          </strong>
-          <div className="space-y-1">
+          <h4 className="vercel-footer-title">Navigation</h4>
+          <div className="vercel-footer-links">
             {FOOTER_NAV.map((link) => (
               <button
                 key={link.tab}
                 onClick={() => handleNavClick(link.tab)}
-                className="block text-xs text-text-faint hover:text-text-dim transition-colors py-0.5"
               >
                 {link.label}
               </button>
@@ -76,34 +71,20 @@ export function Footer() {
 
         {/* Legal */}
         <div>
-          <strong className="block text-[10px] font-medium tracking-[0.12em] uppercase text-text-dim mb-4">
-            Legal
-          </strong>
-          <div className="space-y-1">
-            <a href="#" className="block text-xs text-text-faint hover:text-text-dim transition-colors py-0.5">
-              Privacy
-            </a>
-            <a href="#" className="block text-xs text-text-faint hover:text-text-dim transition-colors py-0.5">
-              Terms
-            </a>
-            <a href="#" className="block text-xs text-text-faint hover:text-text-dim transition-colors py-0.5">
-              License
-            </a>
+          <h4 className="vercel-footer-title">Legal</h4>
+          <div className="vercel-footer-links">
+            <a href="#">Privacy</a>
+            <a href="#">Terms</a>
+            <a href="#">License</a>
           </div>
         </div>
       </div>
 
       {/* Bottom */}
-      <div className="border-t border-line mt-8 pt-6 flex flex-col md:flex-row items-center justify-between gap-3">
-        <span className="text-xs text-text-faint font-light">
-          2026 LLM Memory Guide
-        </span>
-        <span className="text-xs text-text-faint font-light">
-          Next.js · TypeScript · Tailwind
-        </span>
-        <span className="text-xs text-accent-bright">
-          Monolith v2
-        </span>
+      <div className="max-w-6xl mx-auto mt-12 pt-8 border-t border-gray-900 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-gray-600">
+        <span>© 2026 LLM Memory Guide</span>
+        <span>Next.js · TypeScript · Tailwind</span>
+        <span className="text-gray-400">Vercel Style</span>
       </div>
     </footer>
   );

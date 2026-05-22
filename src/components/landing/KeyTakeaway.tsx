@@ -1,6 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import { ArrowRight } from 'lucide-react'
 import { useAppStore } from '@/lib/store'
 
 const progressions = [
@@ -23,14 +24,15 @@ export default function KeyTakeaway() {
   const setActiveTab = useAppStore((s) => s.setActiveTab)
 
   return (
-    <section className="max-w-[1120px] mx-auto px-6 md:px-14 py-28 md:py-40 text-center border-t border-line">
+    <section className="vercel-section text-center">
       <motion.h2
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.5 }}
+        className="h1"
       >
-        Start <em>building</em>
+        Start Building
       </motion.h2>
       
       <motion.p
@@ -38,7 +40,7 @@ export default function KeyTakeaway() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.45, delay: 0.1 }}
-        className="text-text-dim text-sm mt-4 mb-10 max-w-md mx-auto font-light"
+        className="text-gray-500 mt-4 mb-10 max-w-md mx-auto"
       >
         No single technique fits all. Combine methods based on your scenario.
       </motion.p>
@@ -48,17 +50,17 @@ export default function KeyTakeaway() {
         initial="hidden"
         whileInView="show"
         viewport={{ once: true }}
-        className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-10"
+        className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-10"
       >
         {progressions.map((p) => (
           <motion.div
             key={p.from}
             variants={item}
-            className="mono-card px-5 py-3 flex items-center gap-3"
+            className="vercel-card px-5 py-3 flex items-center gap-3"
           >
-            <span className="text-sm text-text-dim font-light">{p.from}</span>
-            <span className="text-accent">→</span>
-            <span className="text-sm text-accent-bright">{p.to}</span>
+            <span className="text-sm text-gray-500">{p.from}</span>
+            <ArrowRight className="w-4 h-4 text-gray-600" />
+            <span className="text-sm text-white font-medium">{p.to}</span>
           </motion.div>
         ))}
       </motion.div>
@@ -68,10 +70,11 @@ export default function KeyTakeaway() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.35, delay: 0.3 }}
-        className="btn-fill"
+        className="btn-primary"
         onClick={() => setActiveTab('learn')}
       >
         Begin Learning
+        <ArrowRight className="w-4 h-4" />
       </motion.button>
     </section>
   )
