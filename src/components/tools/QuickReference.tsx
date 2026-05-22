@@ -3,8 +3,9 @@
 import { useState } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { CodeBlock } from '@/components/ui/code-block';
 import { TECHNIQUES } from '@/lib/constants';
-import { ChevronDown, ChevronUp, Copy, Check } from 'lucide-react';
+import { ChevronDown, ChevronUp } from 'lucide-react';
 
 const CODE_SNIPPETS: Record<string, { title: string; code: string }> = {
   summarization: {
@@ -165,7 +166,6 @@ export default function QuickReference() {
   const [complexityFilter, setComplexityFilter] = useState<FilterType>('all');
   const [infraFilter, setInfraFilter] = useState<InfraFilter>('all');
   const [expandedCards, setExpandedCards] = useState<Set<string>>(new Set());
-  const [copiedId, setCopiedId] = useState<string | null>(null);
 
   const filtered = TECHNIQUES.filter((t) => {
     if (complexityFilter !== 'all' && t.complexity !== complexityFilter) return false;
@@ -181,16 +181,6 @@ export default function QuickReference() {
       else next.add(id);
       return next;
     });
-  };
-
-  const handleCopy = async (id: string, code: string) => {
-    try {
-      await navigator.clipboard.writeText(code);
-      setCopiedId(id);
-      setTimeout(() => setCopiedId(null), 2000);
-    } catch {
-      // fallback
-    }
   };
 
   return (
@@ -322,35 +312,18 @@ export default function QuickReference() {
                 )}
               </div>
 
-              {/* Code Snippet */}
+              {/* Code Snippet with Syntax Highlighting */}
               {isExpanded && snippet && (
-                <div className="border-t border-border bg-muted/30">
-                  <div className="flex items-center justify-between px-4 py-2 border-b border-border/50">
-                    <span className="text-[10px] font-mono text-muted-foreground uppercase">
-                      {snippet.title}
-                    </span>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => handleCopy(t.id, snippet.code)}
-                      className="h-6 gap-1 text-muted-foreground"
-                    >
-                      {copiedId === t.id ? (
-                        <>
-                          <Check className="size-3" />
-                          <span className="text-emerald-500">Скопировано</span>
-                        </>
-                      ) : (
-                        <>
-                          <Copy className="size-3" />
-                          Копировать
-                        </>
-                      )}
-                    </Button>
-                  </div>
-                  <pre className="p-4 overflow-x-auto text-xs leading-relaxed scrollbar-industrial max-h-64 overflow-y-auto">
-                    <code className="font-mono text-foreground/80">{snippet.code}</code>
-                  </pre>
+                <div className="border-t border-border">
+                  <CodeBlock
+                    code={snippet.code}
+                    language="python"
+                    title={snippet.title}
+                    showCopy={true}
+                    showLanguage={true}
+                    maxHeight="16rem"
+                    className="border-0 rounded-none"
+                  />
                 </div>
               )}
             </div>
