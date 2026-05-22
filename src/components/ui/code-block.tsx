@@ -1,7 +1,7 @@
 'use client';
 
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { Copy, Check, Terminal } from 'lucide-react';
+import { Copy, Check } from 'lucide-react';
 import { useState, useCallback } from 'react';
 import { cn } from '@/lib/utils';
 
@@ -33,13 +33,11 @@ interface CodeBlockProps {
   className?: string;
   maxHeight?: string;
   title?: string;
-  glassmorphism?: boolean;
 }
 
 /* ────────────────────────────────────────────
    CodeBlock Component
-   VS Code-style with glassmorphism
-   Inspired by Vercel/Stripe documentation
+   Uses CSS classes from globals.css for theming
    ──────────────────────────────────────────── */
 
 export function CodeBlock({
@@ -50,7 +48,6 @@ export function CodeBlock({
   className,
   maxHeight,
   title,
-  glassmorphism = true,
 }: CodeBlockProps) {
   const [copied, setCopied] = useState(false);
 
@@ -78,61 +75,53 @@ export function CodeBlock({
   return (
     <div
       className={cn(
-        'rounded-lg overflow-hidden',
-        glassmorphism ? 'glassmorphism-card' : 'bg-card border border-border',
+        'rounded-sm border border-border overflow-hidden bg-card',
         className
       )}
       role="figure"
       aria-label={title || `Код на языке ${languageLabel}`}
     >
-      {/* Title Bar - macOS/VS Code style */}
-      <div className={cn(
-        'flex items-center justify-between px-4 py-2',
-        glassmorphism
-          ? 'bg-black/40 border-b border-white/5'
-          : 'bg-muted/50 border-b border-border'
-      )}>
-        {/* Traffic lights */}
-        <div className="flex items-center gap-2">
-          <div className="w-3 h-3 rounded-full bg-[#FF5F56] hover:brightness-110 transition-all cursor-pointer" />
-          <div className="w-3 h-3 rounded-full bg-[#FFBD2E] hover:brightness-110 transition-all cursor-pointer" />
-          <div className="w-3 h-3 rounded-full bg-[#27CA40] hover:brightness-110 transition-all cursor-pointer" />
+      {/* Header */}
+      {(showLanguage || showCopy || title) && (
+        <div className="flex items-center justify-between px-4 py-2 bg-muted/50 border-b border-border">
+          <div className="flex items-center gap-2">
+            {title ? (
+              <span className="text-xs font-mono text-foreground font-medium">
+                {title}
+              </span>
+            ) : showLanguage ? (
+              <span className="text-[10px] font-mono text-muted-foreground uppercase tracking-wider">
+                {languageLabel}
+              </span>
+            ) : null}
+          </div>
+          {showCopy && (
+            <button
+              onClick={handleCopy}
+              className={cn(
+                'flex items-center gap-1.5 px-2 py-1 rounded-sm text-xs font-mono transition-colors',
+                'hover:bg-background/50 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary',
+                copied
+                  ? 'text-terminal-green'
+                  : 'text-muted-foreground hover:text-foreground'
+              )}
+              aria-label={copied ? 'Код скопирован' : 'Копировать код'}
+            >
+              {copied ? (
+                <>
+                  <Check className="size-3" aria-hidden="true" />
+                  <span>Скопировано</span>
+                </>
+              ) : (
+                <>
+                  <Copy className="size-3" aria-hidden="true" />
+                  <span>Копировать</span>
+                </>
+              )}
+            </button>
+          )}
         </div>
-
-        {/* Filename/Language */}
-        <div className="flex items-center gap-2 absolute left-1/2 -translate-x-1/2">
-          <Terminal className="size-3.5 text-primary" />
-          <span className="text-xs font-mono text-muted-foreground">
-            {title || `${language}.${language === 'python' ? 'py' : language === 'javascript' ? 'js' : language}`}
-          </span>
-        </div>
-
-        {/* Copy button */}
-        {showCopy && (
-          <button
-            onClick={handleCopy}
-            className={cn(
-              'flex items-center gap-1.5 px-2 py-1 rounded text-xs font-mono transition-all',
-              copied
-                ? 'text-terminal-green bg-terminal-green/10'
-                : 'text-muted-foreground hover:text-foreground hover:bg-white/5'
-            )}
-            aria-label={copied ? 'Код скопирован' : 'Копировать код'}
-          >
-            {copied ? (
-              <>
-                <Check className="size-3" />
-                <span className="hidden sm:inline">Скопировано</span>
-              </>
-            ) : (
-              <>
-                <Copy className="size-3" />
-                <span className="hidden sm:inline">Копировать</span>
-              </>
-            )}
-          </button>
-        )}
-      </div>
+      )}
 
       {/* Code with Syntax Highlighting */}
       <div
@@ -141,20 +130,13 @@ export function CodeBlock({
       >
         <SyntaxHighlighter
           language={language}
+          // Using empty object - CSS classes from globals.css handle theming
           style={{}}
           customStyle={{
             margin: 0,
             padding: '1rem',
-            background: glassmorphism ? 'transparent' : '#141414',
+            background: '#141414',
             borderRadius: 0,
-          }}
-          showLineNumbers={true}
-          lineNumberStyle={{
-            minWidth: '2.5em',
-            paddingRight: '1em',
-            color: '#4A4A4A',
-            textAlign: 'right',
-            userSelect: 'none',
           }}
           codeTagProps={{
             className: 'language-' + language,
@@ -164,23 +146,6 @@ export function CodeBlock({
         >
           {code.trim()}
         </SyntaxHighlighter>
-      </div>
-
-      {/* Status bar */}
-      <div className={cn(
-        'flex items-center justify-between px-3 py-1 text-[10px] font-mono',
-        glassmorphism
-          ? 'bg-black/20 text-muted-foreground border-t border-white/5'
-          : 'bg-muted/30 text-muted-foreground border-t border-border'
-      )}>
-        <div className="flex items-center gap-3">
-          <span>{languageLabel}</span>
-          <span>{code.split('\n').length} строк</span>
-        </div>
-        <div className="flex items-center gap-3">
-          <span>UTF-8</span>
-          <span className="text-terminal-green">●</span>
-        </div>
       </div>
     </div>
   );

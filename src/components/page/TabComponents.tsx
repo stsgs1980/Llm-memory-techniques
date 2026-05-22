@@ -1,11 +1,8 @@
 'use client';
 
-import { useRef, useCallback, useState, useEffect } from 'react';
+import { useRef, useCallback } from 'react';
 import { TOOLS_SUBTABS, RESOURCES_SUBTABS, LEARNING_MODULES } from '@/data/navigation';
 import { ModuleCard, ToolQuickCard } from './ModuleCard';
-import { BackButton, ScrollToTop, BreadcrumbNav } from '@/components/ui/BackButton';
-import { ArrowUp } from 'lucide-react';
-import { useAppStore } from '@/lib/store';
 
 // Landing
 import HeroSection from '@/components/landing/HeroSection';
@@ -47,33 +44,16 @@ export function OverviewTab() {
       <TokenFlowComparison />
       <HowToStart />
       <KeyTakeaway />
-      <ScrollToTopButton />
     </div>
   );
 }
 
 export function LearnTab() {
-  const { activeTab, setActiveTab } = useAppStore();
-  
   return (
     <div className="px-4 sm:px-6 lg:px-8 py-10">
-      {/* Breadcrumb Navigation */}
-      <BreadcrumbNav 
-        items={[
-          { label: 'Главная', onClick: () => setActiveTab('overview') },
-          { label: 'Обучение' }
-        ]} 
-        className="mb-6"
-      />
-      
       <div className="mb-10">
-        <div className="flex items-center justify-between">
-          <div>
-            <p className="font-mono text-xs text-primary uppercase tracking-widest mb-2">Обучение</p>
-            <h2 className="text-2xl md:text-3xl font-bold font-mono tracking-tight">Изучите техники управления памятью</h2>
-          </div>
-          <BackButton variant="back" onClick={() => setActiveTab('overview')} />
-        </div>
+        <p className="font-mono text-xs text-primary uppercase tracking-widest mb-2">Обучение</p>
+        <h2 className="text-2xl md:text-3xl font-bold font-mono tracking-tight">Изучите техники управления памятью</h2>
         <p className="text-muted-foreground mt-2 max-w-2xl text-sm">
           Пошаговое обучение от основ до продвинутых подходов. Каждый модуль включает теорию, визуализации и практические примеры.
         </p>
@@ -98,16 +78,12 @@ export function LearnTab() {
       <div className="mt-16"><Glossary /></div>
       <div className="mt-16"><RoadmapSection /></div>
       <div className="mt-16"><QuickQuiz /></div>
-      
-      {/* Scroll to Top */}
-      <ScrollToTopButton />
     </div>
   );
 }
 
 export function ToolsTab() {
   const toolRefs = useRef<Record<string, HTMLDivElement | null>>({});
-  const { activeTab, setActiveTab } = useAppStore();
 
   const scrollToTool = useCallback((id: string) => {
     const el = toolRefs.current[id];
@@ -119,23 +95,9 @@ export function ToolsTab() {
 
   return (
     <div className="px-4 sm:px-6 lg:px-8 py-10">
-      {/* Breadcrumb Navigation */}
-      <BreadcrumbNav 
-        items={[
-          { label: 'Главная', onClick: () => setActiveTab('overview') },
-          { label: 'Инструменты' }
-        ]} 
-        className="mb-6"
-      />
-      
       <div className="mb-8">
-        <div className="flex items-center justify-between">
-          <div>
-            <p className="font-mono text-xs text-primary uppercase tracking-widest mb-2">Инструменты</p>
-            <h2 className="text-2xl md:text-3xl font-bold font-mono tracking-tight">Калькуляторы, сравнения и анализ</h2>
-          </div>
-          <BackButton variant="back" onClick={() => setActiveTab('overview')} />
-        </div>
+        <p className="font-mono text-xs text-primary uppercase tracking-widest mb-2">Инструменты</p>
+        <h2 className="text-2xl md:text-3xl font-bold font-mono tracking-tight">Калькуляторы, сравнения и анализ</h2>
         <p className="text-muted-foreground mt-2 max-w-2xl text-sm">
           Рассчитайте стоимость, сравните техники и выберите оптимальную стратегию для вашего проекта.
         </p>
@@ -155,35 +117,16 @@ export function ToolsTab() {
         <div ref={(el) => { toolRefs.current['benchmarks'] = el; }}><BenchmarksChart /></div>
         <div ref={(el) => { toolRefs.current['quick-ref'] = el; }}><QuickReference /></div>
       </div>
-      
-      {/* Scroll to Top */}
-      <ScrollToTopButton />
     </div>
   );
 }
 
 export function PlaygroundTab() {
-  const { setActiveTab } = useAppStore();
-  
   return (
     <div className="px-4 sm:px-6 lg:px-8 py-10">
-      {/* Breadcrumb Navigation */}
-      <BreadcrumbNav 
-        items={[
-          { label: 'Главная', onClick: () => setActiveTab('overview') },
-          { label: 'Песочница' }
-        ]} 
-        className="mb-6"
-      />
-      
       <div className="mb-8">
-        <div className="flex items-center justify-between">
-          <div>
-            <p className="font-mono text-xs text-primary uppercase tracking-widest mb-2">Песочница</p>
-            <h2 className="text-2xl md:text-3xl font-bold font-mono tracking-tight">Экспериментируйте с техниками</h2>
-          </div>
-          <BackButton variant="back" onClick={() => setActiveTab('overview')} />
-        </div>
+        <p className="font-mono text-xs text-primary uppercase tracking-widest mb-2">Песочница</p>
+        <h2 className="text-2xl md:text-3xl font-bold font-mono tracking-tight">Экспериментируйте с техниками</h2>
         <p className="text-muted-foreground mt-2 max-w-2xl text-sm">
           Попробуйте каждую технику в действии: переключайте подходы в живом чате, исследуйте пошаговые визуализации.
         </p>
@@ -192,16 +135,12 @@ export function PlaygroundTab() {
         <LiveChatDemo />
         <InteractiveExplorer />
       </div>
-      
-      {/* Scroll to Top */}
-      <ScrollToTopButton />
     </div>
   );
 }
 
 export function ResourcesTab() {
   const resRefs = useRef<Record<string, HTMLDivElement | null>>({});
-  const { activeTab, setActiveTab } = useAppStore();
 
   const scrollToRes = useCallback((id: string) => {
     const el = resRefs.current[id];
@@ -213,23 +152,9 @@ export function ResourcesTab() {
 
   return (
     <div className="px-4 sm:px-6 lg:px-8 py-10">
-      {/* Breadcrumb Navigation */}
-      <BreadcrumbNav 
-        items={[
-          { label: 'Главная', onClick: () => setActiveTab('overview') },
-          { label: 'Ресурсы' }
-        ]} 
-        className="mb-6"
-      />
-      
       <div className="mb-8">
-        <div className="flex items-center justify-between">
-          <div>
-            <p className="font-mono text-xs text-primary uppercase tracking-widest mb-2">Ресурсы</p>
-            <h2 className="text-2xl md:text-3xl font-bold font-mono tracking-tight">Справочные материалы и сообщество</h2>
-          </div>
-          <BackButton variant="back" onClick={() => setActiveTab('overview')} />
-        </div>
+        <p className="font-mono text-xs text-primary uppercase tracking-widest mb-2">Ресурсы</p>
+        <h2 className="text-2xl md:text-3xl font-bold font-mono tracking-tight">Справочные материалы и сообщество</h2>
         <p className="text-muted-foreground mt-2 max-w-2xl text-sm">
           Глоссарий, FAQ, дорожная карта и советы от сообщества разработчиков.
         </p>
@@ -251,54 +176,6 @@ export function ResourcesTab() {
         <div ref={(el) => { resRefs.current['case-studies'] = el; }}><CaseStudies /></div>
         <div ref={(el) => { resRefs.current['community'] = el; }}><CommunityInsights /></div>
       </div>
-      
-      {/* Scroll to Top */}
-      <ScrollToTopButton />
     </div>
   );
 }
-
-/* ────────────────────────────────────────────
-   Scroll to Top Button Component
-   Shows when scrolling down
-   ──────────────────────────────────────────── */
-
-function ScrollToTopButton() {
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setVisible(window.scrollY > 300);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  if (!visible) return null;
-
-  return (
-    <button
-      onClick={scrollToTop}
-      className="
-        fixed bottom-6 right-6 z-50
-        w-12 h-12 rounded-full
-        glassmorphism-card
-        flex items-center justify-center
-        text-primary hover:text-foreground
-        hover:border-primary/40
-        transition-all duration-200
-        shadow-lg shadow-black/30
-        animate-amber-fade-in
-      "
-      aria-label="Прокрутить наверх"
-    >
-      <ArrowUp className="size-5" />
-    </button>
-  );
-}
-
-
