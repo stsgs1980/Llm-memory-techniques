@@ -1,6 +1,5 @@
 'use client';
 
-import { useState, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Slider } from '@/components/ui/slider';
@@ -12,69 +11,25 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { DollarSign, TrendingDown, Zap, RotateCcw } from 'lucide-react';
-import {
-  MODEL_PRICES,
-  TECHNIQUES,
-  formatNumber,
-  formatUSD,
-  type ModelId,
-} from '@/lib/constants';
-
-const SAVINGS_MAP: Record<string, number> = {
-  summarization: 0.8,
-  hierarchical: 0.7,
-  rag: 0.9,
-  'fact-extraction': 0.95,
-  'sliding-window': 0.5,
-  'semantic-cache': 0.9,
-  none: 0,
-};
+import { MODEL_PRICES, TECHNIQUES, formatNumber, formatUSD, type ModelId } from '@/lib/constants';
+import { useCostSimulator } from '@/hooks/useCostSimulator';
 
 export default function CostSimulator() {
-  const [modelId, setModelId] = useState<ModelId>('gpt-4o');
-  const [techniqueId, setTechniqueId] = useState('summarization');
-  const [messagesPerDay, setMessagesPerDay] = useState(100);
-  const [avgTokensPerMsg, setAvgTokensPerMsg] = useState(150);
-  const [daysPeriod, setDaysPeriod] = useState<'month' | 'year'>('month');
-
-  const daysInPeriod = daysPeriod === 'month' ? 30 : 365;
-
-  const results = useMemo(() => {
-    const model = MODEL_PRICES[modelId];
-    const savingsFactor = SAVINGS_MAP[techniqueId] ?? 0;
-
-    const tokensWithout = messagesPerDay * avgTokensPerMsg * daysInPeriod;
-    const tokensWith = tokensWithout * (1 - savingsFactor);
-
-    const costWithout = (tokensWithout / 1_000_000) * model.input;
-    const costWith = (tokensWith / 1_000_000) * model.input;
-
-    const savedAmount = costWithout - costWith;
-    const savedPercent = costWithout > 0 ? (savedAmount / costWithout) * 100 : 0;
-    const yearlySaved = savedAmount * (365 / daysInPeriod);
-
-    return {
-      tokensWithout,
-      tokensWith,
-      costWithout,
-      costWith,
-      savedAmount,
-      savedPercent,
-      yearlySaved,
-    };
-  }, [modelId, techniqueId, messagesPerDay, avgTokensPerMsg, daysInPeriod]);
-
-  const maxCost = Math.max(results.costWithout, 0.01);
-  const withoutBarWidth = 100;
-  const withBarWidth = maxCost > 0 ? (results.costWith / maxCost) * 100 : 0;
-
-  const handleReset = () => {
-    setModelId('gpt-4o');
-    setTechniqueId('summarization');
-    setMessagesPerDay(100);
-    setAvgTokensPerMsg(150);
-    setDaysPeriod('month');
-  };
+  const {
+    modelId,
+    techniqueId,
+    messagesPerDay,
+    avgTokensPerMsg,
+    daysPeriod,
+    results,
+    barWidths,
+    setModelId,
+    setTechniqueId,
+    setMessagesPerDay,
+    setAvgTokensPerMsg,
+    setDaysPeriod,
+    handleReset,
+  } = useCostSimulator();
 
   return (
     <section className="space-y-6">
@@ -337,7 +292,7 @@ export default function CostSimulator() {
                 <div className="flex-1 h-4 bg-muted rounded-sm overflow-hidden">
                   <div
                     className="h-full bg-destructive/60 rounded-sm transition-all duration-500"
-                    style={{ width: `${withoutBarWidth}%` }}
+                    style={{ width: `${barWidths.withoutBarWidth}%` }}
                   />
                 </div>
                 <span className="text-xs font-mono text-foreground w-16 text-right">
@@ -351,7 +306,7 @@ export default function CostSimulator() {
                 <div className="flex-1 h-4 bg-muted rounded-sm overflow-hidden">
                   <div
                     className="h-full bg-emerald-500/60 rounded-sm transition-all duration-500"
-                    style={{ width: `${withBarWidth}%` }}
+                    style={{ width: `${barWidths.withBarWidth}%` }}
                   />
                 </div>
                 <span className="text-xs font-mono text-emerald-500 w-16 text-right">

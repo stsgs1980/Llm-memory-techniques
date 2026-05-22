@@ -1,6 +1,5 @@
 'use client';
 
-import { useState, useMemo, useCallback } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -16,437 +15,29 @@ import {
   Trophy,
   Target,
   TrendingUp,
-  Layers,
-  Database,
-  FileJson,
-  Scissors,
-  Zap,
 } from 'lucide-react';
-import { TECHNIQUES } from '@/lib/constants';
-
-/* ─────────── Types ─────────── */
-
-interface QuizQuestion {
-  id: string;
-  question: string;
-  options: string[];
-  correctIndex: number;
-  explanation: string;
-  difficulty: 'basic' | 'medium' | 'advanced';
-  technique: string;
-  techniqueId: string;
-}
-
-interface TechniqueScore {
-  id: string;
-  name: string;
-  correct: number;
-  total: number;
-  icon: React.ElementType;
-}
-
-/* ─────────── Quiz Data ─────────── */
-
-const QUESTIONS: QuizQuestion[] = [
-  // ── Суммаризация ──
-  {
-    id: 'q1',
-    question: 'Какой примерно процент токенов экономит суммаризация?',
-    options: ['20–40%', '70–90%', '40–60%', '50–70%'],
-    correctIndex: 1,
-    explanation:
-      'Суммаризация позволяет сэкономить 70–90% токенов за счёт сжатия длинной истории диалога в краткое резюме.',
-    difficulty: 'basic',
-    technique: 'Суммаризация',
-    techniqueId: 'summarization',
-  },
-  {
-    id: 'q2',
-    question: 'Какая инфраструктура необходима для суммаризации?',
-    options: ['Векторная БД', 'Сервер и БД', 'Только API к LLM', 'Специальный GPU-кластер'],
-    correctIndex: 2,
-    explanation:
-      'Суммаризация — самая простая в развёртывании техника. Нужен только доступ к API LLM для генерации саммари.',
-    difficulty: 'basic',
-    technique: 'Суммаризация',
-    techniqueId: 'summarization',
-  },
-  {
-    id: 'q3',
-    question: 'Что такое инкрементальное обновление саммари?',
-    options: [
-      'Полная пересуммаризация всей истории',
-      'Обновление существующего резюме только новыми сообщениями',
-      'Удаление старого саммари и создание нового',
-      'Хранение нескольких версий саммари',
-    ],
-    correctIndex: 1,
-    explanation:
-      'Инкрементальное обновление берёт существующий саммари и добавляет к нему только новую информацию из последних сообщений, что экономит токены.',
-    difficulty: 'medium',
-    technique: 'Суммаризация',
-    techniqueId: 'summarization',
-  },
-
-  // ── Иерархическая память ──
-  {
-    id: 'q4',
-    question: 'Из каких двух уровней состоит иерархическая память?',
-    options: [
-      'Основной и вторичный',
-      'Краткосрочная и долгосрочная',
-      'Горячий и холодный',
-      'Быстрый и медленный',
-    ],
-    correctIndex: 1,
-    explanation:
-      'Иерархическая память использует краткосрочную память (последние сообщения) и долгосрочную память (архив с резюме и ключевыми фактами).',
-    difficulty: 'basic',
-    technique: 'Иерархическая память',
-    techniqueId: 'hierarchical',
-  },
-  {
-    id: 'q5',
-    question: 'Какой экономии токенов можно достичь с иерархической памятью?',
-    options: ['40–60%', '70–90%', '60–80%', '80–95%'],
-    correctIndex: 2,
-    explanation:
-      'Иерархическая память экономит 60–80% токенов за счёт того, что вместо полной истории отправляется только краткосрочная + релевантная часть долгосрочной.',
-    difficulty: 'medium',
-    technique: 'Иерархическая память',
-    techniqueId: 'hierarchical',
-  },
-  {
-    id: 'q6',
-    question: 'Какой уровень сложности реализации у иерархической памяти?',
-    options: ['Низкий', 'Средний', 'Высокий', 'Очень высокий'],
-    correctIndex: 1,
-    explanation:
-      'Иерархическая память имеет средний уровень сложности — требуется сервер и база данных для хранения двух уровней памяти, но не нужна векторная БД.',
-    difficulty: 'basic',
-    technique: 'Иерархическая память',
-    techniqueId: 'hierarchical',
-  },
-
-  // ── RAG ──
-  {
-    id: 'q7',
-    question: 'Что такое RAG?',
-    options: [
-      'Random Answer Generation — случайная генерация ответов',
-      'Retrieval-Augmented Generation — генерация с дополненной выборкой',
-      'Real-time Augmented Graphics — графика в реальном времени',
-      'Recursive Array Generation — рекурсивная генерация массивов',
-    ],
-    correctIndex: 1,
-    explanation:
-      'RAG (Retrieval-Augmented Generation) — это техника, при которой перед генерацией ответа LLM получает релевантные фрагменты из базы данных через векторный поиск.',
-    difficulty: 'basic',
-    technique: 'RAG (векторный поиск)',
-    techniqueId: 'rag',
-  },
-  {
-    id: 'q8',
-    question: 'Какая метрика используется для измерения сходства текстов в RAG?',
-    options: ['Евклидово расстояние', 'Косинусное сходство', 'Манхэттенское расстояние', 'L2 норма'],
-    correctIndex: 1,
-    explanation:
-      'Косинусное сходство (cosine similarity) измеряет угол между векторами. Чем меньше угол (ближе к 0°), тем больше тексты похожи по смыслу.',
-    difficulty: 'medium',
-    technique: 'RAG (векторный поиск)',
-    techniqueId: 'rag',
-  },
-  {
-    id: 'q9',
-    question: 'Какой оптимальный размер чанка (фрагмента) для векторной БД?',
-    options: ['50–100 токенов', '200–500 токенов', '1000–2000 токенов', '5000+ токенов'],
-    correctIndex: 1,
-    explanation:
-      'Оптимальный размер чанка составляет 200–500 токенов. Слишком маленькие чанки теряют контекст, слишком большие — снижают точность поиска.',
-    difficulty: 'advanced',
-    technique: 'RAG (векторный поиск)',
-    techniqueId: 'rag',
-  },
-  {
-    id: 'q10',
-    question: 'Какой процент экономии токенов возможен с RAG?',
-    options: ['40–60%', '60–80%', '70–90%', '80–95%'],
-    correctIndex: 3,
-    explanation:
-      'RAG экономит 80–95% токенов, так как вместо всей истории отправляются только наиболее релевантные фрагменты по запросу.',
-    difficulty: 'medium',
-    technique: 'RAG (векторный поиск)',
-    techniqueId: 'rag',
-  },
-
-  // ── Извлечение фактов ──
-  {
-    id: 'q11',
-    question: 'В каком формате извлечение фактов хранит данные о пользователе?',
-    options: ['CSV таблица', 'Структурированный JSON', 'Простой текст', 'XML документ'],
-    correctIndex: 1,
-    explanation:
-      'Извлечение фактов сохраняет данные в структурированном JSON-формате, что позволяет удобно обновлять, запрашивать и объединять информацию.',
-    difficulty: 'basic',
-    technique: 'Извлечение фактов',
-    techniqueId: 'fact-extraction',
-  },
-  {
-    id: 'q12',
-    question: 'Какая экономия токенов у извлечения фактов?',
-    options: ['40–60%', '60–80%', '70–90%', '90–99%'],
-    correctIndex: 3,
-    explanation:
-      'Извлечение фактов экономит 90–99% токенов, так как вместо полной истории отправляется компактный JSON-профиль с ключевыми данными.',
-    difficulty: 'medium',
-    technique: 'Извлечение фактов',
-    techniqueId: 'fact-extraction',
-  },
-  {
-    id: 'q13',
-    question: 'Что происходит при конфликте новых и существующих данных в профиле?',
-    options: [
-      'Старые данные всегда имеют приоритет',
-      'Новые данные перезаписывают старые',
-      'Обе версии сохраняются для ручной проверки',
-      'Конфликтующие данные удаляются',
-    ],
-    correctIndex: 1,
-    explanation:
-      'При конфликте новые данные обычно имеют приоритет, а старое значение переносится в историю изменений (superseded). Это можно настроить.',
-    difficulty: 'advanced',
-    technique: 'Извлечение фактов',
-    techniqueId: 'fact-extraction',
-  },
-
-  // ── Sliding Window ──
-  {
-    id: 'q14',
-    question: 'Что такое Sliding Window в контексте памяти LLM?',
-    options: [
-      'Окно для просмотра истории в интерфейсе',
-      'Хранение только последних N сообщений (FIFO)',
-      'Окно генерации текста по частям',
-      'Временной интервал для кэширования',
-    ],
-    correctIndex: 1,
-    explanation:
-      'Sliding Window — это простейший подход к управлению памятью: хранится только последние N сообщений, более старые удаляются по принципу FIFO.',
-    difficulty: 'basic',
-    technique: 'Sliding Window',
-    techniqueId: 'sliding-window',
-  },
-  {
-    id: 'q15',
-    question: 'Какая инфраструктура нужна для Sliding Window?',
-    options: ['Векторная БД', 'Сервер и БД', 'Только API к LLM', 'Не нужна — вообще'],
-    correctIndex: 3,
-    explanation:
-      'Sliding Window — самая простая техника. Дополнительная инфраструктура не требуется — достаточно хранить массив последних сообщений.',
-    difficulty: 'basic',
-    technique: 'Sliding Window',
-    techniqueId: 'sliding-window',
-  },
-  {
-    id: 'q16',
-    question: 'Какой главный недостаток Sliding Window?',
-    options: [
-      'Высокая стоимость реализации',
-      'Потеря старого контекста при удалении сообщений',
-      'Медленная скорость работы',
-      'Требует GPU для работы',
-    ],
-    correctIndex: 1,
-    explanation:
-      'Главный недостаток — при сдвиге окна старые сообщения безвозвратно удаляются. Если в них были важные факты или решения, они теряются.',
-    difficulty: 'medium',
-    technique: 'Sliding Window',
-    techniqueId: 'sliding-window',
-  },
-
-  // ── Семантический кэш ──
-  {
-    id: 'q17',
-    question: 'На каком принципе работает семантический кэш?',
-    options: [
-      'Точное совпадение строк',
-      'Семантическое сходство запросов через эмбеддинги',
-      'Хэширование запросов',
-      'Таймер жизни кэша',
-    ],
-    correctIndex: 1,
-    explanation:
-      'Семантический кэш использует эмбеддинги для сравнения смысла запросов. Похожие по смыслу запросы получают кэшированный ответ, даже если формулировки отличаются.',
-    difficulty: 'medium',
-    technique: 'Семантический кэш',
-    techniqueId: 'semantic-cache',
-  },
-  {
-    id: 'q18',
-    question: 'Для каких задач семантический кэш подходит лучше всего?',
-    options: [
-      'Креативное письмо',
-      'FAQ и поддержка с повторяющимися вопросами',
-      'Генерация кода',
-      'Перевод документов',
-    ],
-    correctIndex: 1,
-    explanation:
-      'Семантический кэш идеален для FAQ и поддержки, где пользователи часто задают одни и те же вопросы в разных формулировках.',
-    difficulty: 'basic',
-    technique: 'Семантический кэш',
-    techniqueId: 'semantic-cache',
-  },
-
-  // ── Общие / комбинированные ──
-  {
-    id: 'q19',
-    question: 'Что такое контекстное окно LLM?',
-    options: [
-      'Интерфейс для просмотра истории',
-      'Максимальный объём текста, который LLM может обработать за один запрос',
-      'Количество сообщений в чате',
-      'Размер кэша процессора',
-    ],
-    correctIndex: 1,
-    explanation:
-      'Контекстное окно — это лимит входных токенов для модели. GPT-4o: 128K, Claude 3.5: 200K, Gemini 1.5 Pro: 2M токенов.',
-    difficulty: 'basic',
-    technique: 'Общие знания',
-    techniqueId: 'general',
-  },
-  {
-    id: 'q20',
-    question: 'Какая лучшая практика для production-систем?',
-    options: [
-      'Использовать только одну технику',
-      'Комбинировать несколько техник',
-      'Не управлять памятью вообще',
-      'Использовать только Sliding Window',
-    ],
-    correctIndex: 1,
-    explanation:
-      'Лучшая практика — комбинировать техники. Например: Sliding Window + Суммаризация для базового контекста, RAG для поиска по истории, Извлечение фактов для персонализации.',
-    difficulty: 'medium',
-    technique: 'Комбинированный подход',
-    techniqueId: 'combined',
-  },
-];
-
-/* ─────────── Helpers ─────────── */
-
-const DIFFICULTY_CONFIG = {
-  basic: { label: 'Базовый', color: 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20' },
-  medium: { label: 'Средний', color: 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20' },
-  advanced: { label: 'Продвинутый', color: 'bg-red-500/10 text-red-600 dark:text-red-400 border-red-500/20' },
-};
-
-function shuffleArray<T>(arr: T[]): T[] {
-  const shuffled = [...arr];
-  for (let i = shuffled.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-  }
-  return shuffled;
-}
-
-const TECHNIQUE_ICONS: Record<string, React.ElementType> = {
-  summarization: Brain,
-  hierarchical: Layers,
-  rag: Database,
-  'fact-extraction': FileJson,
-  'sliding-window': Scissors,
-  'semantic-cache': Zap,
-  general: Brain,
-  combined: Layers,
-};
+import { useQuizState } from '@/hooks/useQuizState';
+import { QUESTIONS, DIFFICULTY_CONFIG } from '@/data/quiz-questions';
 
 /* ─────────── Component ─────────── */
 
-type QuizPhase = 'intro' | 'playing' | 'results';
-
 export default function QuickQuiz() {
-  const [phase, setPhase] = useState<QuizPhase>('intro');
-  const [shuffledQuestions, setShuffledQuestions] = useState<QuizQuestion[]>([]);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
-  const [answers, setAnswers] = useState<Map<string, number>>(new Map());
-
-  const startQuiz = useCallback(() => {
-    setShuffledQuestions(shuffleArray(QUESTIONS));
-    setCurrentIndex(0);
-    setSelectedAnswer(null);
-    setAnswers(new Map());
-    setPhase('playing');
-  }, []);
-
-  const currentQuestion = shuffledQuestions[currentIndex];
-  const isAnswered = selectedAnswer !== null;
-  const progressPercent = shuffledQuestions.length > 0
-    ? ((currentIndex + (isAnswered ? 1 : 0)) / shuffledQuestions.length) * 100
-    : 0;
-
-  /* ── Results ── */
-
-  const results = useMemo(() => {
-    const techniqueScores = new Map<string, TechniqueScore>();
-
-    shuffledQuestions.forEach((q) => {
-      if (!techniqueScores.has(q.techniqueId)) {
-        techniqueScores.set(q.techniqueId, {
-          id: q.techniqueId,
-          name: q.technique,
-          correct: 0,
-          total: 0,
-          icon: TECHNIQUE_ICONS[q.techniqueId] || Brain,
-        });
-      }
-      const score = techniqueScores.get(q.techniqueId)!;
-      score.total++;
-      if (answers.get(q.id) === q.correctIndex) {
-        score.correct++;
-      }
-    });
-
-    const totalCorrect = Array.from(answers.values()).filter((ansIdx, i) => {
-      const q = shuffledQuestions[i];
-      return q && ansIdx === q.correctIndex;
-    }).length;
-
-    return {
-      totalCorrect,
-      totalQuestions: shuffledQuestions.length,
-      percentage: shuffledQuestions.length > 0
-        ? Math.round((totalCorrect / shuffledQuestions.length) * 100)
-        : 0,
-      techniqueScores: Array.from(techniqueScores.values()),
-    };
-  }, [shuffledQuestions, answers]);
-
-  const handleSelectAnswer = (index: number) => {
-    if (isAnswered) return;
-    setSelectedAnswer(index);
-    setAnswers((prev) => new Map(prev).set(currentQuestion.id, index));
-  };
-
-  const handleNext = () => {
-    if (currentIndex + 1 >= shuffledQuestions.length) {
-      setPhase('results');
-    } else {
-      setCurrentIndex((prev) => prev + 1);
-      setSelectedAnswer(null);
-    }
-  };
-
-  const handleBackToIntro = () => {
-    setPhase('intro');
-    setShuffledQuestions([]);
-    setCurrentIndex(0);
-    setSelectedAnswer(null);
-    setAnswers(new Map());
-  };
-
-  /* ── Render ── */
+  const {
+    phase,
+    shuffledQuestions,
+    currentIndex,
+    selectedAnswer,
+    answers,
+    currentQuestion,
+    isAnswered,
+    progressPercent,
+    results,
+    totalQuestions,
+    startQuiz,
+    handleSelectAnswer,
+    handleNext,
+    handleBackToIntro,
+  } = useQuizState();
 
   return (
     <div className="space-y-6">
@@ -468,7 +59,7 @@ export default function QuickQuiz() {
                 Проверьте свои знания
               </h3>
               <p className="text-sm text-muted-foreground leading-relaxed mb-4">
-                {QUESTIONS.length} вопросов о техниках управления памятью LLM.
+                {totalQuestions} вопросов о техниках управления памятью LLM.
                 Охватывает все 6 техник: от основ Sliding Window до продвинутого RAG.
               </p>
               <div className="flex gap-2 flex-wrap justify-center mb-6">
@@ -562,7 +153,7 @@ export default function QuickQuiz() {
                   return (
                     <button
                       key={idx}
-                      onClick={() => handleSelectAnswer(idx)}
+                      onClick={() => handleSelectAnswer(currentQuestion.id, idx)}
                       disabled={isAnswered}
                       className={`w-full flex items-center gap-3 p-3 rounded-md border text-left transition-all ${optionStyle}`}
                     >
@@ -735,9 +326,10 @@ export default function QuickQuiz() {
             <CardContent className="p-5">
               <h4 className="font-mono text-sm font-semibold mb-4">Обзор ответов</h4>
               <div className="space-y-3 max-h-96 overflow-y-auto scrollbar-industrial">
-                {shuffledQuestions.map((q, idx) => {
-                  const userAnswer = answers.get(q.id);
-                  const isCorrect = userAnswer === q.correctIndex;
+                {shuffledQuestions.map((q) => {
+                  const userAnswer = q ? (q.id ? answers.get(q.id) : undefined) : undefined;
+                  const isCorrect = userAnswer === q?.correctIndex;
+                  if (!q) return null;
                   return (
                     <div
                       key={q.id}

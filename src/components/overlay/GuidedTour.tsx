@@ -102,7 +102,7 @@ const TOTAL_STEPS = TOUR_STEPS.length;
    GuidedTour component
    ──────────────────────────────────────────── */
 export default function GuidedTour() {
-  const { tourOpen, setTourOpen, setActiveTab } = useAppStore();
+  const { tourOpen, setTourOpen, setTourCompleted, setActiveTab } = useAppStore();
   const [currentStep, setCurrentStep] = useState(0);
 
   const step = TOUR_STEPS[currentStep];
@@ -132,9 +132,9 @@ export default function GuidedTour() {
     if (currentStep < TOTAL_STEPS - 1) {
       setCurrentStep((s) => s + 1);
     } else {
-      setTourOpen(false);
+      setTourCompleted(true);
     }
-  }, [currentStep, setTourOpen]);
+  }, [currentStep, setTourCompleted]);
 
   const goPrev = useCallback(() => {
     if (currentStep > 0) {
@@ -143,8 +143,8 @@ export default function GuidedTour() {
   }, [currentStep]);
 
   const handleSkip = useCallback(() => {
-    setTourOpen(false);
-  }, [setTourOpen]);
+    setTourCompleted(true);
+  }, [setTourCompleted]);
 
   return (
     <Dialog open={tourOpen} onOpenChange={handleOpenChange}>

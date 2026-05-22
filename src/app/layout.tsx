@@ -1,22 +1,25 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { IBM_Plex_Mono, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
+import { CRTShader } from "@/components/effects/CRTShader";
 
-const geistSans = Geist({
+const spaceGrotesk = Space_Grotesk({
   variable: "--font-geist-sans",
-  subsets: ["latin"],
+  subsets: ["latin", "cyrillic"],
+  weight: ["400", "500", "600", "700"],
 });
 
-const geistMono = Geist_Mono({
+const ibmPlexMono = IBM_Plex_Mono({
   variable: "--font-geist-mono",
-  subsets: ["latin"],
+  subsets: ["latin", "cyrillic"],
+  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
-  title: "LLM Memory Guide — Индустриальный справочник по управлению памятью",
+  title: "LLM Memory Guide — Terminal Interface",
   description:
-    "Интерактивный гид по 6 техникам управления памятью LLM: суммаризация, иерархическая память, RAG, извлечение фактов, sliding window, семантический кэш. Сравнения, калькуляторы, демо.",
+    "Interactive terminal guide to 6 LLM memory management techniques: summarization, hierarchical memory, RAG, fact extraction, sliding window, semantic cache.",
   keywords: [
     "LLM",
     "memory management",
@@ -34,7 +37,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "LLM Memory Guide",
-    description: "Интерактивный гид по управлению памятью LLM",
+    description: "Interactive terminal guide to LLM memory management",
     type: "website",
   },
 };
@@ -47,8 +50,9 @@ export default function RootLayout({
   return (
     <html lang="ru" className="dark" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased bg-background text-foreground`}
+        className={`${spaceGrotesk.variable} ${ibmPlexMono.variable} font-sans antialiased bg-background text-foreground`}
       >
+        <CRTShader />
         {children}
         <Toaster />
       </body>
