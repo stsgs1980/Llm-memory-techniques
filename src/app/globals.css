@@ -523,8 +523,8 @@ pre, .code-block {
   overflow-x: auto;
 }
 
-/* Inline code */
-code:not(pre code) {
+/* Inline code - only for code NOT inside pre (syntax highlighter) */
+code:not(pre code):not([class*="language-"]) {
   font-family: var(--font-geist-mono), monospace;
   font-size: 0.875em;
   padding: 0.125rem 0.375rem;
@@ -694,4 +694,152 @@ hr {
 
 .scrollbar-industrial::-webkit-scrollbar-thumb:hover {
   background: var(--amber);
+}
+
+/* ========================================
+   SYNTAX HIGHLIGHTER TOKENS
+   Amber-Retro colors for code highlighting
+   ======================================== */
+
+/* Base code styling for syntax highlighter */
+pre[class*="language-"],
+code[class*="language-"] {
+  color: #E8DCC8;
+  text-shadow: none;
+  font-family: var(--font-geist-mono), "IBM Plex Mono", monospace;
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  direction: ltr;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  tab-size: 2;
+  hyphens: none;
+}
+
+pre[class*="language-"] {
+  background: #141414;
+  padding: 1rem;
+  margin: 0;
+  overflow: auto;
+  border-radius: 0;
+}
+
+/* Comments */
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: #6B705C;
+  font-style: italic;
+}
+
+/* Punctuation */
+.token.punctuation {
+  color: #B8A060;
+}
+
+/* Keywords: def, class, if, else, return, import, from, etc. */
+.token.keyword {
+  color: #00FFFF;
+  font-weight: 600;
+}
+
+/* Built-in functions: len, print, list, dict, str, int, etc. */
+.token.builtin {
+  color: #FFB000;
+}
+
+/* Functions */
+.token.function {
+  color: #FFB000;
+}
+
+/* Strings */
+.token.string,
+.token.char,
+.token.regex {
+  color: #00FF88;
+}
+
+/* Numbers */
+.token.number {
+  color: #FF8C00;
+}
+
+/* Operators */
+.token.operator {
+  color: #B8A060;
+}
+
+/* Variables */
+.token.variable {
+  color: #E8DCC8;
+}
+
+/* Class names */
+.token.class-name {
+  color: #00FFFF;
+}
+
+/* Properties */
+.token.property {
+  color: #FFB000;
+}
+
+/* Constants */
+.token.constant {
+  color: #FF8C00;
+}
+
+/* Boolean: True, False */
+.token.boolean {
+  color: #00FFFF;
+}
+
+/* Important */
+.token.important {
+  color: #FFB000;
+  font-weight: 600;
+}
+
+/* Decorators: @... */
+.token.decorator,
+.token.annotation {
+  color: #FFB000;
+}
+
+/* Namespace/Module */
+.token.namespace {
+  color: #E8DCC8;
+}
+
+/* Selector */
+.token.selector {
+  color: #00FFFF;
+}
+
+/* Attribute */
+.token.attr-name {
+  color: #00FFFF;
+}
+
+.token.attr-value {
+  color: #00FF88;
+}
+
+/* Tag */
+.token.tag {
+  color: #FFB000;
+}
+
+/* Deleted (diff) */
+.token.deleted {
+  color: #FF6B6B;
+}
+
+/* Inserted (diff) */
+.token.inserted {
+  color: #00FF88;
 }

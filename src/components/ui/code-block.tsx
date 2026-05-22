@@ -1,98 +1,9 @@
 'use client';
 
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { Copy, Check } from 'lucide-react';
 import { useState, useCallback } from 'react';
 import { cn } from '@/lib/utils';
-
-/* ────────────────────────────────────────────
-   Amber-Retro Syntax Highlighter Theme
-   Based on VSC Dark Plus with Amber-Retro colors
-   ──────────────────────────────────────────── */
-
-const amberRetroTheme = {
-  ...vscDarkPlus,
-  'pre[class*="language-"]': {
-    ...vscDarkPlus['pre[class*="language-"]'],
-    background: '#141414',
-    color: '#E8DCC8',
-    fontFamily: 'var(--font-geist-mono), "IBM Plex Mono", monospace',
-    fontSize: '0.8125rem',
-    lineHeight: '1.6',
-    margin: 0,
-    padding: '1rem',
-    borderRadius: 0,
-  },
-  'code[class*="language-"]': {
-    ...vscDarkPlus['code[class*="language-"]'],
-    background: 'transparent',
-    color: '#E8DCC8',
-    fontFamily: 'var(--font-geist-mono), "IBM Plex Mono", monospace',
-    fontSize: '0.8125rem',
-    lineHeight: '1.6',
-    textShadow: 'none',
-  },
-  // Comments
-  comment: { color: '#6B705C', fontStyle: 'italic' },
-  prolog: { color: '#6B705C', fontStyle: 'italic' },
-  doctype: { color: '#6B705C', fontStyle: 'italic' },
-  cdata: { color: '#6B705C', fontStyle: 'italic' },
-  // Punctuation
-  punctuation: { color: '#B8A060' },
-  // Keywords: def, class, if, else, return, import, from, etc.
-  keyword: { color: '#00FFFF', fontWeight: '600' },
-  'keyword.module': { color: '#00FFFF' },
-  'keyword.control': { color: '#00FFFF' },
-  'keyword.operator': { color: '#00FFFF' },
-  'keyword.other': { color: '#00FFFF' },
-  // Built-ins: len, print, list, dict, etc.
-  builtin: { color: '#FFB000' },
-  'builtin.function': { color: '#FFB000' },
-  'builtin.type': { color: '#FFB000' },
-  // Functions: def names
-  function: { color: '#FFB000', fontWeight: '500' },
-  'function.definition': { color: '#FFB000' },
-  'function.call': { color: '#FFB000' },
-  // Strings
-  string: { color: '#00FF88' },
-  'string.quoted': { color: '#00FF88' },
-  'string.template': { color: '#00FF88' },
-  // Numbers
-  number: { color: '#FF8C00' },
-  'number.integer': { color: '#FF8C00' },
-  'number.float': { color: '#FF8C00' },
-  // Operators
-  operator: { color: '#B8A060' },
-  'operator.assignment': { color: '#B8A060' },
-  'operator.arithmetic': { color: '#B8A060' },
-  'operator.comparison': { color: '#B8A060' },
-  // Variables
-  variable: { color: '#E8DCC8' },
-  'variable.parameter': { color: '#FFB000' },
-  'variable.other': { color: '#E8DCC8' },
-  // Class names
-  'class-name': { color: '#00FFFF' },
-  'class.definition': { color: '#00FFFF' },
-  // Property
-  property: { color: '#FFB000' },
-  // Constants
-  constant: { color: '#FF8C00' },
-  'constant.language': { color: '#00FFFF' },
-  'constant.numeric': { color: '#FF8C00' },
-  // Decorators
-  decorator: { color: '#FFB000' },
-  annotation: { color: '#FFB000' },
-  // Special
-  important: { color: '#FFB000', fontWeight: '600' },
-  // Boolean
-  boolean: { color: '#00FFFF' },
-  // Null/None
-  'constant.language.null': { color: '#00FFFF' },
-  // Imports
-  'namespace': { color: '#E8DCC8' },
-  'module': { color: '#E8DCC8' },
-};
 
 /* ────────────────────────────────────────────
    Language map for display
@@ -126,6 +37,7 @@ interface CodeBlockProps {
 
 /* ────────────────────────────────────────────
    CodeBlock Component
+   Uses CSS classes from globals.css for theming
    ──────────────────────────────────────────── */
 
 export function CodeBlock({
@@ -218,19 +130,16 @@ export function CodeBlock({
       >
         <SyntaxHighlighter
           language={language}
-          style={amberRetroTheme}
+          // Using empty object - CSS classes from globals.css handle theming
+          style={{}}
           customStyle={{
             margin: 0,
             padding: '1rem',
             background: '#141414',
-            fontSize: '0.8125rem',
-            lineHeight: '1.6',
             borderRadius: 0,
           }}
           codeTagProps={{
-            style: {
-              fontFamily: 'var(--font-geist-mono), "IBM Plex Mono", monospace',
-            },
+            className: 'language-' + language,
           }}
           PreTag="div"
           CodeTag="code"
