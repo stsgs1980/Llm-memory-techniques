@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, JetBrains_Mono, Playfair_Display } from "next/font/google";
+import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 
@@ -7,13 +7,6 @@ const inter = Inter({
   variable: "--font-geist-sans",
   subsets: ["latin", "cyrillic"],
   weight: ["400", "500", "600", "700"],
-});
-
-const playfair = Playfair_Display({
-  variable: "--font-serif",
-  subsets: ["latin", "cyrillic"],
-  weight: ["400", "500", "600", "700"],
-  style: ["normal", "italic"],
 });
 
 const jetbrains = JetBrains_Mono({
@@ -56,7 +49,7 @@ export default function RootLayout({
   return (
     <html lang="ru" className="dark" suppressHydrationWarning>
       <body
-        className={`${inter.variable} ${playfair.variable} ${jetbrains.variable} font-sans antialiased`}
+        className={`${inter.variable} ${jetbrains.variable} font-sans antialiased`}
       >
         {/* WCAG: Skip to main content */}
         <a href="#main-content" className="zai-skip-link">

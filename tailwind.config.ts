@@ -52,7 +52,6 @@ const config: Config = {
       },
       fontFamily: {
         sans: ['var(--font-geist-sans)', 'Inter', 'system-ui', 'sans-serif'],
-        serif: ['var(--font-serif)', 'Playfair Display', 'Georgia', 'serif'],
         mono: ['var(--font-geist-mono)', 'JetBrains Mono', 'monospace'],
       },
       spacing: {

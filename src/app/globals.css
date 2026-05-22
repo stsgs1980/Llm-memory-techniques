@@ -26,7 +26,6 @@
   --color-ring: var(--zai-color-border-focus);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-  --font-serif: var(--font-serif);
   
   /* Fibonacci spacing --fib-* */
   --space-fib-1: var(--fib-1);
@@ -235,43 +234,39 @@
 }
 
 /* ========================================
-   TYPOGRAPHY - Serif for headings
+   TYPOGRAPHY - Sans-serif headings
    ======================================== */
 
 h1, .h1 {
-  font-family: var(--font-serif), Georgia, serif;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
   font-size: var(--zai-font-size-10);
-  font-weight: 400;
-  font-style: italic;
+  font-weight: 700;
   line-height: 1.1;
   letter-spacing: -0.02em;
   color: var(--zai-color-text-primary);
 }
 
 h2, .h2 {
-  font-family: var(--font-serif), Georgia, serif;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
   font-size: var(--zai-font-size-8);
-  font-weight: 400;
-  font-style: italic;
+  font-weight: 700;
   line-height: 1.2;
   letter-spacing: -0.01em;
   color: var(--zai-color-text-primary);
 }
 
 h3, .h3 {
-  font-family: var(--font-serif), Georgia, serif;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
   font-size: var(--zai-font-size-6);
-  font-weight: 400;
-  font-style: italic;
+  font-weight: 600;
   line-height: 1.3;
   color: var(--zai-color-text-primary);
 }
 
 h4, .h4 {
-  font-family: var(--font-serif), Georgia, serif;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
   font-size: var(--zai-font-size-5);
-  font-weight: 400;
-  font-style: italic;
+  font-weight: 600;
   line-height: 1.4;
   color: var(--zai-color-text-primary);
 }
