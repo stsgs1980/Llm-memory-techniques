@@ -4,6 +4,31 @@
 
 Interactive guide to 6 LLM memory management techniques with visualizations, calculators, and hands-on demos.
 
+
+[![Next.js](https://img.shields.io/badge/Next.js-black?style=flat-square)](https://nextjs.org)
+[![React](https://img.shields.io/badge/React-61DAFB?style=flat-square)](https://react.dev)
+[![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat-square)](https://www.typescriptlang.org)
+[![Tailwind_CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=flat-square)](https://tailwindcss.com)
+[![Prisma](https://img.shields.io/badge/Prisma-2D3748?style=flat-square)](https://www.prisma.io)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
+
+
+## Table of Contents
+
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Getting Started](#getting-started)
+- [Install dependencies](#install-dependencies)
+- [Run development server](#run-development-server)
+- [Build for production](#build-for-production)
+- [Start production server](#start-production-server)
+- [Project Structure](#project-structure)
+- [Architecture](#architecture)
+- [Design System](#design-system)
+- [Scripts](#scripts)
+- [Contributing](#contributing)
+- [License](#license)
+
 ## Features
 
 ### 6 Memory Techniques
@@ -51,16 +76,16 @@ Interactive guide to 6 LLM memory management techniques with visualizations, cal
 ## Getting Started
 
 ```bash
-# Install dependencies
+## Install dependencies
 bun install
 
-# Run development server
+## Run development server
 bun dev
 
-# Build for production
+## Build for production
 bun run build
 
-# Start production server
+## Start production server
 bun start
 ```
 
@@ -68,7 +93,7 @@ Open [http://localhost:3000](http://localhost:3000)
 
 ## Project Structure
 
-```
+```css
 src/
 ├── app/                    # Next.js App Router
 │   ├── page.tsx           # Main page (5 tabs)
@@ -96,7 +121,7 @@ src/
 
 After anti-monolith refactoring, all components follow a modular structure:
 
-```
+```bash
 Component/
 ├── index.tsx              # Composer (orchestrates sections + hooks)
 ├── sections/              # Pure UI components (no state)
@@ -161,3 +186,6 @@ Component/
 ## License
 
 MIT
+
+---
+Built with: Next.js + React + TypeScript + Tailwind CSS
